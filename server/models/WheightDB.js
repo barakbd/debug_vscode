@@ -10,35 +10,35 @@ var simulateAsyncCall = function (params, callback) {
     })
 }
 
-class UserStore {
+class WheightStore {
   constructor() {
-    if (!UserStore.UserDB) {
-      this._data = [];
-      UserStore.UserDB = this;
+    if (!WheightStore.WheightDB) {
+      this._data = {};
+      WheightStore.WheightDB = this;
     }
 
-    return UserStore.UserDB;
+    return WheightStore.WheightDB;
   }
 
-  set(newUser) {
-    console.log("UserDB.set(user) - " + util.inspect(newUser, utilOptions))
+  set(newWheight) {
+    console.log("WheightDB.set(user) - " + util.inspect(newWheight, utilOptions))
     return new Promise(resolve => {
       setTimeout(() => {
-        console.log("UserDB.set(user) - this._data - " + util.inspect(this._data, utilOptions));
+        console.log("WheightDB.set(user) - this._data - " + util.inspect(this._data, utilOptions));
         this
           ._data
-          .push(newUser);
-        resolve(newUser)
+          .push(newWheight);
+        resolve(newWheight)
       }, 3000)
     })
   }
 
   get(username) {
-    console.log("UserDB.get(username) - " + username)
+    console.log("WheightDB.get(username) - " + username)
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        console.log("UserDB.get - inside timeOut - this - " + util.inspect(this._data, utilOptions))
-        let searchNewUser = new Promise((resolve) => {
+        console.log("WheightDB.get - inside timeOut - this - " + util.inspect(this._data, utilOptions))
+        let searchNewWheight = new Promise((resolve) => {
           /*
           resolve(() => {
             for (var i = 0; i < this._data.length; i++) {
@@ -51,12 +51,12 @@ class UserStore {
  */
           resolve(this._data.find(user => user.username.toLowerCase() === username.toLowerCase()))
         });
-        searchNewUser.then((user) => {
+        searchNewWheight.then((user) => {
           if (user != undefined) {
-            console.log("UserDB.get(username) - resolve")
+            console.log("WheightDB.get(username) - resolve")
             resolve(user)
           } else {
-            console.log("UserDB.get(username) - reject")
+            console.log("WheightDB.get(username) - reject")
             reject(user)
           }
         })
@@ -64,9 +64,9 @@ class UserStore {
     }) //end Promise
 
   }
-} // end class UserStore
+} // end class WheightStore
 
-const UserDB = new UserStore();
-Object.freeze(UserDB);
+const WheightDB = new WheightStore();
+Object.freeze(WheightDB);
 
-module.exports = UserDB
+module.exports = WheightDB

@@ -1,6 +1,5 @@
 const userDB = require("../models/UserDB");
 const UserClass = require("../models/UserClass");
-const tracer = require('tracer').colorConsole();
 const util = require('util')
 const utilOptions = {
     showHidden: false,
@@ -23,7 +22,7 @@ module.exports = {
             .get(req.body.username)
             .then(() => {
                 console.log("usersController.create - user exists - ")
-                res.send("User exists - can't add user")
+                res.json("User exists - can't add user")
             })
             .catch(() => {
                 console.log("usersController.create - user does not exists - catch - ")
@@ -34,7 +33,7 @@ module.exports = {
                 userDB
                     .set(newUser)
                     .then(function (newUser) {
-                        res.send("new user added" + JSON.stringify(newUser))
+                        res.json("new user added" + JSON.stringify(newUser))
                     })
             })
     }, //end create
@@ -45,11 +44,11 @@ module.exports = {
             .get(req.params.username)
             .then((user) => {
                 console.log("usersController.get - user exists - ")
-                res.send("User found" + JSON.stringify(user))
+                res.json("User found" + JSON.stringify(user))
             })
             .catch(() => {
-                console.log("usersController.get - ctach - user not found")
-                res.send("User not found")
+                console.log("usersController.get - catch - user not found")
+                res.json("User not found")
 
             })
     }, //end get

@@ -1,5 +1,3 @@
-var tracer = require('tracer').colorConsole();
-
 //create express app
 const express = require('express');
 const app = express();
@@ -16,3 +14,4 @@ routes(app);
 app.listen(8000, function(){
     console.log('listening on port 8000');
 });
+module.exports = app
