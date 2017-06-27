@@ -37,19 +37,19 @@ node (nodemon) server.js
 #### getUser:
 **endpoint:** /users/:username<br />
 **Method:** Get<br />
-**url example:** /users/:username
+**url example:** /users/Mark
 
 #### createWheightForUser:
-endpoint: /wheights/:username<br />
-Method: Post <br />
-url example: /wheights/Mark<br />
-body example: {"wheight": 222}
+**endpoint:** /wheights/:username<br />
+**Method:** Post <br />
+**url example:** /wheights/Mark<br />
+**body example:** {"wheight": 222}
 
 #### getWheightsForUser (with query for average):
-endpoint: /wheights/:username<br />
-Method: Get<br />
-url example: /wheights/Mark<br />
-url example with query: /wheights/Mark?options=average
+**endpoint:** /wheights/:username<br />
+**Method:** Get<br />
+**url example:** /wheights/Mark<br />
+**url example with query:** /wheights/Mark?options=average
 
 ## Tests
 npm test (uses mocha, chai and chai-http)
