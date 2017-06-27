@@ -1,12 +1,13 @@
 const userDB = require("../models/UserDB");
 const UserClass = require("../models/UserClass");
+
 const util = require('util')
 const utilOptions = {
     showHidden: false,
     depth: 2
 }
-console.log(util.inspect(userDB, utilOptions))
 
+console.log(util.inspect("usersController - userDB - " + userDB, utilOptions))
 /* function simulateAsyncCall(params, callback) {
     return new Promise(function (resolve, reject) {
         console.log("Promise returned")
@@ -17,23 +18,29 @@ console.log(util.inspect(userDB, utilOptions))
  */
 module.exports = {
     create: function (req, res) {
+        if (!req.body || !req.body.username)
+        {
+            return res.json("can't add empty username")
+        } else if (typeof req.body.username === "number")
+        {
+            return res.json("username must be a string")
+        }
         console.log("usersController.Create - req.body - " + util.inspect(req.body, utilOptions));
         userDB
             .get(req.body.username)
             .then(() => {
                 console.log("usersController.create - user exists - ")
-                res.json("User exists - can't add user")
+                return res.json("User exists - can't add user")
             })
             .catch(() => {
                 console.log("usersController.create - user does not exists - catch - ")
-                let newUser = {
-                    username: req.body.username,
-                    createdAt: new Date()
-                }
+                let createdAt = new Date()
+                let newUser = new UserClass(req.body.username, createdAt)
+                console.log("newUser = " + util.inspect(newUser, utilOptions))
                 userDB
                     .set(newUser)
                     .then(function (newUser) {
-                        res.json("new user added" + JSON.stringify(newUser))
+                        return res.json("new user added: " + JSON.stringify(newUser))
                     })
             })
     }, //end create
@@ -44,11 +51,11 @@ module.exports = {
             .get(req.params.username)
             .then((user) => {
                 console.log("usersController.get - user exists - ")
-                res.json("User found" + JSON.stringify(user))
+                return res.json("User found" + JSON.stringify(user))
             })
             .catch(() => {
                 console.log("usersController.get - catch - user not found")
-                res.json("User not found")
+                return res.json("User not found")
 
             })
     }, //end get

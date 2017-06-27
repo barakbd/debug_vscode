@@ -1,5 +1,6 @@
 // require controllers and store in variable in order to call
 const usersController = require("../controllers/usersController.js")
+const wheightsController = require("../controllers/wheightsController.js")
 
 
 module.exports = function (app) {
@@ -8,10 +9,6 @@ module.exports = function (app) {
     //create new user
     app.post('/users', function (req, res) {
         usersController.create(req, res);
-    });
-    //get all users
-    app.get('/users', function (req, res) {
-        usersController.index(req, res);
     });
 
     //get one user
@@ -24,23 +21,19 @@ module.exports = function (app) {
         usersController.delete(req, res);
     });
     //----------------- wheight routes ------------------
-    //create new user
-    app.post('/wheights', function (req, res) {
-        usersController.create(req, res);
-    });
-    //get all users
-    app.get('/wheights', function (req, res) {
-        usersController.index(req, res);
+    //create new wheight
+    app.post('/wheights/:username', function (req, res) {
+        wheightsController.create(req, res);
     });
 
-    //get one user
+    //get wheights for user
     app.get('/wheights/:username', function (req, res) {
-        usersController.get(req, res);
+        wheightsController.get(req, res);
     });
 
-    //delete user
+    //delete wheight for user
     app.delete('/wheights/:username', function (req, res) {
-        usersController.delete(req, res);
+        wheightsController.delete(req, res);
     });
 
 

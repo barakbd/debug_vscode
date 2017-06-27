@@ -5,14 +5,15 @@ const utilOptions = {
   depth: 2
 }
 var simulateAsyncCall = function (params, callback) {
-    return new Promise( (resolve, reject) => {
-        setTimeout(callback, 3000)
-    })
+  return new Promise((resolve, reject) => {
+    setTimeout(callback, 3000)
+  })
 }
 
 class UserStore {
   constructor() {
-    if (!UserStore.UserDB) {
+    if (!UserStore.UserDB)
+    {
       this._data = [];
       UserStore.UserDB = this;
     }
@@ -37,7 +38,7 @@ class UserStore {
     console.log("UserDB.get(username) - " + username)
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        console.log("UserDB.get - inside timeOut - this - " + util.inspect(this._data, utilOptions))
+        console.log("UserDB.get - inside timeOut - this._data - " + util.inspect(this._data, utilOptions))
         let searchNewUser = new Promise((resolve) => {
           /*
           resolve(() => {
@@ -52,10 +53,12 @@ class UserStore {
           resolve(this._data.find(user => user.username.toLowerCase() === username.toLowerCase()))
         });
         searchNewUser.then((user) => {
-          if (user != undefined) {
+          if (user != undefined)
+          {
             console.log("UserDB.get(username) - resolve")
             resolve(user)
-          } else {
+          } else
+          {
             console.log("UserDB.get(username) - reject")
             reject(user)
           }

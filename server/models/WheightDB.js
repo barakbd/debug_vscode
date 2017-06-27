@@ -5,14 +5,15 @@ const utilOptions = {
   depth: 2
 }
 var simulateAsyncCall = function (params, callback) {
-    return new Promise( (resolve, reject) => {
-        setTimeout(callback, 3000)
-    })
+  return new Promise((resolve, reject) => {
+    setTimeout(callback, 3000)
+  })
 }
 
 class WheightStore {
   constructor() {
-    if (!WheightStore.WheightDB) {
+    if (!WheightStore.WheightDB)
+    {
       this._data = {};
       WheightStore.WheightDB = this;
     }
@@ -20,14 +21,15 @@ class WheightStore {
     return WheightStore.WheightDB;
   }
 
-  set(newWheight) {
+  set(username, newWheight) {
     console.log("WheightDB.set(user) - " + util.inspect(newWheight, utilOptions))
     return new Promise(resolve => {
       setTimeout(() => {
         console.log("WheightDB.set(user) - this._data - " + util.inspect(this._data, utilOptions));
-        this
-          ._data
-          .push(newWheight);
+        if (!hasOwnProperty(this._data[username]))
+          this
+            ._data[username]
+            (newWheight);
         resolve(newWheight)
       }, 3000)
     })
@@ -52,10 +54,12 @@ class WheightStore {
           resolve(this._data.find(user => user.username.toLowerCase() === username.toLowerCase()))
         });
         searchNewWheight.then((user) => {
-          if (user != undefined) {
+          if (user != undefined)
+          {
             console.log("WheightDB.get(username) - resolve")
             resolve(user)
-          } else {
+          } else
+          {
             console.log("WheightDB.get(username) - reject")
             reject(user)
           }

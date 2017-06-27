@@ -1,9 +1,9 @@
 // https://www.sitepoint.com/javascript-design-patterns-singleton/
 
-class WheightClass{
-  constructor(username, wheight, createdAt){
-    username: username;
-    createdAt: createdAt;
+class WheightClass {
+  constructor(wheight, createdAt) {
+    this.wheight = wheight;
+    this.createdAt = createdAt;
   }
 }
 module.exports = WheightClass
