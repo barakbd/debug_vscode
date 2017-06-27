@@ -12,9 +12,13 @@ var simulateAsyncCall = function (params, callback) {
 
 class UserStore {
   constructor() {
-    if (!UserStore.UserDB)
-    {
-      this._data = [];
+    if (!UserStore.UserDB) {
+      this._data = [
+        {
+          username: 'John',
+          createdAt: "2017-06-27T18:53:33.861Z"
+        }
+      ];
       UserStore.UserDB = this;
     }
 
@@ -29,7 +33,7 @@ class UserStore {
         this
           ._data
           .push(newUser);
-        resolve(newUser)
+          resolve({newUserAdded: newUser})
       }, 3000)
     })
   }
@@ -41,6 +45,7 @@ class UserStore {
         console.log("UserDB.get - inside timeOut - this._data - " + util.inspect(this._data, utilOptions))
         let searchNewUser = new Promise((resolve) => {
           /*
+          For supporting non ES6/Node v6.x
           resolve(() => {
             for (var i = 0; i < this._data.length; i++) {
               if (this._data[i].hasOwnProperty("username") && this._data[i]["username"].toLowerCase() === username.toLowerCase()) {
@@ -53,14 +58,12 @@ class UserStore {
           resolve(this._data.find(user => user.username.toLowerCase() === username.toLowerCase()))
         });
         searchNewUser.then((user) => {
-          if (user != undefined)
-          {
+          if (user != undefined) {
             console.log("UserDB.get(username) - resolve")
             resolve(user)
-          } else
-          {
+          } else {
             console.log("UserDB.get(username) - reject")
-            reject(user)
+            reject({error: "user does not exists"})
           }
         })
       }, 3000) // end timeOut

@@ -18,11 +18,9 @@ console.log(util.inspect("usersController - userDB - " + userDB, utilOptions))
  */
 module.exports = {
     create: function (req, res) {
-        if (!req.body || !req.body.username)
-        {
+        if (!req.body || !req.body.username) {
             return res.json("can't add empty username")
-        } else if (typeof req.body.username === "number")
-        {
+        } else if (typeof req.body.username === "number") {
             return res.json("username must be a string")
         }
         console.log("usersController.Create - req.body - " + util.inspect(req.body, utilOptions));
@@ -30,7 +28,7 @@ module.exports = {
             .get(req.body.username)
             .then(() => {
                 console.log("usersController.create - user exists - ")
-                return res.json("User exists - can't add user")
+                return res.json({error: "User exists, can't add user"})
             })
             .catch(() => {
                 console.log("usersController.create - user does not exists - catch - ")
@@ -39,8 +37,8 @@ module.exports = {
                 console.log("newUser = " + util.inspect(newUser, utilOptions))
                 userDB
                     .set(newUser)
-                    .then(function (newUser) {
-                        return res.json("new user added: " + JSON.stringify(newUser))
+                    .then(function (newUserAdded) {
+                        return res.json(newUserAdded)
                     })
             })
     }, //end create
@@ -51,11 +49,11 @@ module.exports = {
             .get(req.params.username)
             .then((user) => {
                 console.log("usersController.get - user exists - ")
-                return res.json("User found" + JSON.stringify(user))
+                return res.json({userFound: user})
             })
-            .catch(() => {
+            .catch((error) => {
                 console.log("usersController.get - catch - user not found")
-                return res.json("User not found")
+                return res.json(error)
 
             })
     }, //end get

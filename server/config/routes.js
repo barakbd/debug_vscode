@@ -7,7 +7,7 @@ module.exports = function (app) {
 
     //----------------- users routes ------------------
     //create new user
-    app.post('/users', function (req, res) {
+    app.post('/users/', function (req, res) {
         usersController.create(req, res);
     });
 
@@ -16,7 +16,7 @@ module.exports = function (app) {
         usersController.get(req, res);
     });
 
-    //delete user
+    //delete user - not implemneted
     app.delete('/customers/:username', function (req, res) {
         usersController.delete(req, res);
     });
@@ -31,7 +31,7 @@ module.exports = function (app) {
         wheightsController.get(req, res);
     });
 
-    //delete wheight for user
+    //delete wheight for user - not implemneted
     app.delete('/wheights/:username', function (req, res) {
         wheightsController.delete(req, res);
     });
