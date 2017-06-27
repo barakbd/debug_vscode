@@ -2,7 +2,7 @@
 An example of an node/express server written in ES6/Node v6.x, with in-memory databse data structures. Implemneted some checks on endpoints and in controllers to verify requests format. Used promises and setTimeout to simulate async API and DB calls.
 
 ## Code Example
-<addr>
+```javascript
   set(newUser) {  
     console.log("UserDB.set(user) - " + util.inspect(newUser, utilOptions))  
     return new Promise(resolve => {  
@@ -15,7 +15,7 @@ An example of an node/express server written in ES6/Node v6.x, with in-memory da
       }, 3000)  
     })  
   }  
-<addr>
+``
 ## Motivation
 job interview :)<br />
 <br />
