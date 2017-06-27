@@ -1,13 +1,13 @@
 {
   "name": "NodeServer_InMemoryDB",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "In memory, PRomises, ES6, Node v6.x, express, data structures, Restful",
+  "main": "server.js",
   "scripts": {
     "test": "mocha --timeout 10000 --watch"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3"

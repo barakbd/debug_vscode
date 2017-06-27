@@ -2,6 +2,7 @@
 
 process.env.NODE_ENV = 'test';
 
+let mocha = require('mocha');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
@@ -9,7 +10,7 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 describe('/GET users', () => {
-    it('it should GET no users', (done) => {
+    it('it should GET user John', (done) => {
         chai
             .request(server)
             .get('/users/John')
@@ -22,38 +23,19 @@ describe('/GET users', () => {
                     .body
                     .should
                     .be
-                    .a('string');
+                    .a('object');
                 res
                     .body
                     .should
-                    .equal("User not found")
-                done();
+                    .deep
+                    .equal({
+                        "userFound": {
+                            "username": "John",
+                            "createdAt": "2017-06-27T18:53:33.861Z"
+                        }
+                    })
             });
-    });
+        done()
+        this.bail()        
+    }); 
 });
-/* describe('/GET users', () => {
-    it('it should GET no users', (done) => {
-        chai
-            .request(server)
-            .get('/users/John')
-            .end((err, res) => {
-                res
-                    .should
-                    .have
-                    .status(200);
-                res
-                    .body
-                    .should
-                    .be
-                    .a('array');
-                res
-                    .body
-                    .length
-                    .should
-                    .be
-                    .eql(0);
-                done();
-            });
-    });
-});
- */
