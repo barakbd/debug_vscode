@@ -24,28 +24,28 @@ job interview :)<br />
 npm i (npm install)<br />
 node (nodemon) server.js<br />
 
-###Test with curl or Postman:
+### Test with curl or Postman:
 **URL:** http://localhost:8000<br />
 <br />
 **ENDPOINTS:**<br />
 <br />
-###createNewUser:
+#### createNewUser:
 **endpoint:** /users<br />
 **Method:** Post <br />
 **body example:** {"username": "Mark"}<br />
 
-###getUser:
+#### getUser:
 **endpoint:** /users/:username<br />
 **Method:** Get<br />
 **url example:** /users/:username<br />
 
-###createWheightForUser:
+#### createWheightForUser:
 endpoint: /wheights/:username<br />
 Method: Post <br />
 url example: /wheights/Mark<br />
 body example: {"wheight": 222}<br />
 
-###getWheightsForUser (with query for average):
+#### getWheightsForUser (with query for average):
 endpoint: /wheights/:username<br />
 Method: Get<br />
 url example: /wheights/Mark<br />
