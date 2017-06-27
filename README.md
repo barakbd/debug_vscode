@@ -27,8 +27,8 @@ node (nodemon) server.js<br />
 ### Test with curl or Postman:
 **URL:** http://localhost:8000<br />
 <br />
-**ENDPOINTS:**<br />
-<br />
+### ENDPOINTS:
+
 #### createNewUser:
 **endpoint:** /users<br />
 **Method:** Post <br />
