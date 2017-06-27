@@ -20,7 +20,7 @@ An example of an node/express server written in ES6/Node v6.x, with in-memory da
 job interview :)<br />
 <br />
 ## Installation
-###Run
+### Run
 npm i (npm install)<br />
 node (nodemon) server.js<br />
 
