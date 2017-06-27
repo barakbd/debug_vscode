@@ -20,12 +20,12 @@ An example of an node/express server written in ES6/Node v6.x, with in-memory da
 job interview :)<br />
 <br />
 ## Installation
-Run:<br />
+**Run:**<br />
 npm i (npm install)<br />
 node (nodemon) server.js<br />
 
 Test with curl or Postman:<br />
-URL: http://localhost:8000<br />
+**URL:** http://localhost:8000<br />
 <br />
 ENDPOINTS:<br />
 <br />
