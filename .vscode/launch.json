@@ -4,25 +4,24 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        //Nodemon
         {
+            "name": "Nodemon",
             "type": "node",
             "request": "launch",
-            "name": "nodemon",
             "runtimeExecutable": "nodemon",
-            "runtimeArgs": [
-                "--debug=5858"
-            ],
-            "program": "${workspaceRoot}/server.js",
+            "program": "${workspaceFolder}/server.js",
             "restart": true,
-            "port": 5858,
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
         },
+        //Node
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${file}"
+            "name": "Node",
+            "program": "${workspaceRoot}/server.js",
+            "restart": true,
         }
     ]
 }

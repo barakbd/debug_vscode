@@ -1,40 +1,20 @@
-// require controllers and store in variable in order to call
-const usersController = require("../controllers/usersController.js")
-const wheightsController = require("../controllers/wheightsController.js")
+const fs = require('fs'), path = require("path");
 
+const boxServiceAccount = require("./box_service_account");
 
-module.exports = function (app) {
+/* https://stackoverflow.com/questions/45023624/how-to-require-multiple-controllers-with-express
+https://stackoverflow.com/questions/45023624/how-to-require-multiple-controllers-with-express
+https://www.terlici.com/2014/09/29/express-router.html
+ */
+const express = require('express')
+  , router = express.Router()
 
-    //----------------- users routes ------------------
-    //create new user
-    app.post('/users/', function (req, res) {
-        usersController.create(req, res);
-    });
+ const storageControllers = fs.readdirSync(path.join(__dirname, "../controllers/storage"))
+  .filter(f => f !== 'index.js')
 
-    //get one user
-    app.get('/users/:username', function (req, res) {
-        usersController.get(req, res);
-    });
-
-    //delete user - not implemneted
-    app.delete('/customers/:username', function (req, res) {
-        usersController.delete(req, res);
-    });
-    //----------------- wheight routes ------------------
-    //create new wheight
-    app.post('/wheights/:username', function (req, res) {
-        wheightsController.create(req, res);
-    });
-
-    //get wheights for user
-    app.get('/wheights/:username', function (req, res) {
-        wheightsController.get(req, res);
-    });
-
-    //delete wheight for user - not implemneted
-    app.delete('/wheights/:username', function (req, res) {
-        wheightsController.delete(req, res);
-    });
-
-
-}; //END ROUTES EXPORT
+// var storageControllers={};
+storageControllers.forEach(controller => {
+    // const path = `../controllers/storage/${controller}`
+    router.use('/storage', require(`../controllers/storage/${controller}`)(boxServiceAccount))
+});
+module.exports = router

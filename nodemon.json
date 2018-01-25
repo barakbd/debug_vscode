@@ -1,3 +1,0 @@
-{
-    "restart": "--delay 1 mocha --timeout 100000"
-}
