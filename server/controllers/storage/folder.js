@@ -35,6 +35,19 @@ module.exports = function(boxServiceAccountClient){
                 return res.json(err)
             })
         }, //end get
+        getItems: function (req, res) {
+            boxServiceAccountClient.folders.getItems(/* "45416054928" */req.params.id, {
+                fields: 'name,shared_link,permissions,collections,sync_state'
+            }).then(folderInfo => {
+                return res.json({
+                    status: 200,
+                    data: folderInfo
+                })
+            }).catch(err => {
+                return res.json(err)
+            })
+        }, //end get
+
 
         search: function (req, res) {
             boxServiceAccountClient.search.query(req.params.string, 
@@ -42,12 +55,12 @@ module.exports = function(boxServiceAccountClient){
                     fields: 'name,modified_at,size,extension,permissions,sync_state, collections',
                     type: 'folder',
                     limit: 5,
-                    offset: 0
+                    offset: 0,
                 }
-            ).then(folderInfo => {
+            ).then(folders => {
                 return res.json({
                     status: 200,
-                    data: folderInfo
+                    data: folders
                 })
             }).catch(err => {
                 return res.json(err)
@@ -62,6 +75,7 @@ module.exports = function(boxServiceAccountClient){
 
     router.post("/folder/:id", folderMethods.create)
     router.get("/folder/:id", folderMethods.get)
+    router.get("/folder/:id/items", folderMethods.getItems)
     router.get("/folder/search/:string", folderMethods.search)
 
     return router;

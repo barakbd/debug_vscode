@@ -34,7 +34,29 @@ module.exports = function(boxServiceAccountClient){
             }).catch(err => {
                 return res(err)
             })
-        } //end get
+        }, //end get
+
+        search: function (req, res) {
+            boxServiceAccountClient.search.query( req.params.file_name, 
+                {
+                    // fields: 'name,modified_at,size,extension,permissions,sync_state, collections',
+                    type: 'file',
+                    scope: "user_content",
+                    // ancestor_folder_ids: req.params.folder_id,
+                    limit: 5,
+                    offset: 0,
+                    // file_extensions: "pptx"
+                }
+            ).then(files => {
+                return res.json({
+                    status: 200,
+                    data: files
+                })
+            }).catch(err => {
+                return res.json(err)
+            })
+        } //end search
+
         
     };//end fileMethods
 
@@ -43,6 +65,10 @@ module.exports = function(boxServiceAccountClient){
 
     router.post("/file", filerMethods.create)
     router.get("/file", filerMethods.get)
+    router.get("/file/search/:folder_id/:file_name", filerMethods.search)
+
     return router;
+    
+
     
 };//end module.exports
