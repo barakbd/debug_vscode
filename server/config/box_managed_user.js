@@ -12,7 +12,7 @@ let configFile = require(path.resolve(__dirname + '/../../box_config.json'));
 let configFile = fs.readFileSync('box_config_managed_user.json');
 configFile = JSON.parse(configFile);
 
-// Initialize the SDK with the Box configuration file and create a client that uses the Service Account.
+// Initialize the SDK with the Box configuration file
 let boxManagedUser = boxSDK.getPreconfiguredInstance(configFile);
 // const serviceAccountClient = session.getAppAuthClient('enterprise')
 
