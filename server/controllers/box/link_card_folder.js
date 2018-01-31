@@ -26,21 +26,25 @@ module.exports = function (managedUserSDK) {
                     // res.set('Content-Type', 'application/json');
                     res.send(foldersArray)
                 } else {
-                    boxManagedUserClient.collaborations.createWithUserID(
-                        '3192996959',
+                    // boxManagedUserClient.collaborations.createWithUserID(
+                        // '3192996959',
+                    boxManagedUserClient.collaborations.createWithUserEmail(
+                        'nyu2@cisco.com',
                         foldersArray.entries[0].id,
                         boxManagedUserClient.collaborationRoles.EDITOR, {
                             type: boxManagedUserClient.itemTypes.FOLDER
                         }).then(collaborationID => {
                         res.json(collaborationID)
-                    }).catch(searchError => {
+                    }).catch(collaborationError => {
                         // res.set('Content-Type', 'application/json');
-                        res.send(searchError)
+                        res.send(collaborationError)
                     })
                 }
-            }).catch(boxManagedUserClientError => {
-                res.send(boxManagedUserClientError)
+            }).catch(searchError => {
+                res.send(searchError)
             }) // end returned foldersArray
+        }).catch(boxManagedUserClientError => {
+            res.send(boxManagedUserClientError)
         }) //end getTokensAuthorizationCodeGrant
     }
 }; //end module.exports
