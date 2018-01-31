@@ -9,7 +9,7 @@ const path = require('path');
 let configFile = require(path.resolve(__dirname + '/../../box_config.json'));
 */
 // Read and parse the automatically created Box configuration file.
-let configFile = fs.readFileSync('box_config.json');
+let configFile = fs.readFileSync('box_config_service_account.json');
 configFile = JSON.parse(configFile);
 
 // Initialize the SDK with the Box configuration file and create a client that uses the Service Account.
@@ -23,7 +23,7 @@ serviceAccountClient.users.get('me', null)
     .then((serviceAccountUser) => {
         // Log the Service Account's login value which should contain "AutomationUser". 
         // For example, AutomationUser_375517_dxVhfxwzLL@boxdevedition.com
-        console.log("Sucddsdczdxcvdcess - ", serviceAccountUser)
+        console.log("Service Account - ", serviceAccountUser)
     })
     .catch((err) => {
         // Log any errors for debugging 

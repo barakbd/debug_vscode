@@ -1,20 +1,27 @@
-const fs = require('fs'), path = require("path");
+const boxManagedUserSDK = require("./box_managed_user");
 
-const boxServiceAccount = require("./box_service_account");
+const express = require('express'),
+  router = express.Router()
+router.use('/box/linkCardFolder/:folderName', require(`../controllers/box/link_card_folder`)(boxManagedUserSDK))
 
-/* https://stackoverflow.com/questions/45023624/how-to-require-multiple-controllers-with-express
+
+
+/************  SERVICE ACCOUNT METHODS *********************
 https://stackoverflow.com/questions/45023624/how-to-require-multiple-controllers-with-express
 https://www.terlici.com/2014/09/29/express-router.html
  */
-const express = require('express')
-  , router = express.Router()
 
- const storageControllers = fs.readdirSync(path.join(__dirname, "../controllers/storage"))
-  .filter(f => f !== 'index.js')
+const fs = require('fs'), path = require("path");
+const boxServiceAccountClient = require("./box_service_account");
+
+ const boxControllers = fs.readdirSync(path.join(__dirname, "../controllers/box"))
+  .filter(f => f !== 'link_card_folder.js')
 
 // var storageControllers={};
-storageControllers.forEach(controller => {
+boxControllers.forEach(controller => {
     // const path = `../controllers/storage/${controller}`
-    router.use('/storage', require(`../controllers/storage/${controller}`)(boxServiceAccount))
+    router.use('/box/serviceAccount', require(`../controllers/box/${controller}`)(boxServiceAccountClient))
 });
+
+
 module.exports = router
