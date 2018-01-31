@@ -58,4 +58,4 @@ typings/
 .env
 
 # box config
-box_config.json
+box*config*.json
