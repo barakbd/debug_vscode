@@ -2,14 +2,6 @@
 // const express = require('express');
 // const app = express();
 
-/* DotEnv - Simulate Environment variables
-require dotenv for reading variables from local .env file
-if statement checks that we are not running on prod environment -
-in which case we'd read the actual evn using process.env.<VARIABLE_NAME>
- */
-// if (process.env.NODE_ENV !== 'production') { 
-//     require('dotenv').load();
-// }
 //Server is only sending jsons so we only need body-parser json method
 // const bodyParser = require('body-parser');
 // app.use(bodyParser.json());
@@ -33,24 +25,35 @@ routes(app);
 
 
 //Typescript
-import * as express from 'express'
-class App {
-  public express
+import * as express from 'express';
+import bodyParser from 'body-parser'
+// import routes from
+  class App {
+    public express: express.Application;
 
-  constructor () {
-    this.express = express()
-    this.mountRoutes()
-  }
+    constructor() {
+      this.express = express();
+        this.mountRoutes();
+        this.configureBodyParser();
+    };//end constructor
 
-  private mountRoutes (): void {
-    const router = express.Router()
-    router.get('/', (req, res) => {
-      res.json({
-        message: 'Hello World!'
+    private configureBodyParser() {
+      this.express.use(bodyParser.json());
+      this.express.use(bodyParser.urlencoded({
+            extended: true
+        }))
+    };//end configureBodyParser
+
+    private mountRoutes(): void {
+      const router = express.Router()
+      router.get('/', (req, res) => {
+        res.json({
+          message: 'Hello World!'
+        })
       })
-    })
-    this.express.use('/', router)
-  }
-}
+      this.express.use('/', router)
+    };//end mountRoutes
+
+  }//end Class App
 
 export default new App().express

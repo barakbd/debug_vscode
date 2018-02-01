@@ -1,4 +1,9 @@
 import app from './App'
+import dotenv from 'dotenv';
+
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.load();
+}
 
 const port = process.env.PORT || 3000
 
