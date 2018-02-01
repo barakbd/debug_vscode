@@ -26,10 +26,10 @@ module.exports = function (managedUserSDK) {
                     // res.set('Content-Type', 'application/json');
                     res.send(foldersArray)
                 } else {
-                    // boxManagedUserClient.collaborations.createWithUserID(
-                        // '3192996959',
-                    boxManagedUserClient.collaborations.createWithUserEmail(
-                        'nyu2@cisco.com',
+                    boxManagedUserClient.collaborations.createWithUserID(
+                        '3192996959',
+                    // boxManagedUserClient.collaborations.createWithUserEmail(
+                    //     'nyu2@cisco.com',
                         foldersArray.entries[0].id,
                         boxManagedUserClient.collaborationRoles.EDITOR, {
                             type: boxManagedUserClient.itemTypes.FOLDER
