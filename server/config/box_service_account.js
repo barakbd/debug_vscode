@@ -14,6 +14,10 @@ configFile = JSON.parse(configFile);
 
 // Initialize the SDK with the Box configuration file and create a client that uses the Service Account.
 let session = box.getPreconfiguredInstance(configFile);
+// console.log("Session ****** -", session);
+session.getEnterpriseAppAuthTokens("46575").then(token => {
+    console.log("SA Token - ", token);
+});
 const serviceAccountClient = session.getAppAuthClient('enterprise')
 
 /* Use the users.get method to retrieve current user's information by passing 'me' as the ID.

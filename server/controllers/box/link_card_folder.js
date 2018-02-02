@@ -15,17 +15,11 @@ module.exports = function (managedUserSDK) {
                                 offset: 0,
                             } */
             ).then(foldersArray => {
-                if (foldersArray.length === 0) {
-                    // res.status(404)
-                    res.set('Content-Type', 'application/json');
-                    res.json({
-                        error: "Item not found"
-                    })
-                } else if (foldersArray.length > 1) {
+             if (foldersArray.entries.length > 1) {
                     // res.status(300)
                     // res.set('Content-Type', 'application/json');
                     res.send(foldersArray)
-                } else {
+                } else if(foldersArray.entries.length === 1){
                     boxManagedUserClient.collaborations.createWithUserID(
                         '3192996959',
                     // boxManagedUserClient.collaborations.createWithUserEmail(
@@ -39,6 +33,8 @@ module.exports = function (managedUserSDK) {
                         // res.set('Content-Type', 'application/json');
                         res.send(collaborationError)
                     })
+                }else{
+                    //no folder found - return error
                 }
             }).catch(searchError => {
                 res.send(searchError)
