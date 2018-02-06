@@ -1,7 +1,29 @@
 import * as express from "express";
 const router: express.Router = express.Router();
 
-export default function(client: any){
+// export default 
+class folderMethods{
+    public boxClient: any;
+
+    constructor(boxClient:any) {
+      this.boxClient = boxClient;
+    } //end constructor
+  
+    public create(req: express.Request, res: express.Response) {
+        if (!req.body || !req.body.folder_name) {
+            return res.json("can't add empty folderName")
+        } else if (typeof req.body.folder_name !== "string") {
+            return res.json({
+                status: 400,
+                message: "folderName must be a string"
+            })
+
+    };//end create
+
+  
+}; //end class folderMethods
+
+const folderMethods = function(client: any){
 
     const folderMethods = {
         create: function(req: express.Request, res: express.Response) {
