@@ -1,9 +1,10 @@
-'use strict';
+import * as express from "express";
+const router: express.Router = express.Router();
 
-module.exports = function(client){
+export default function(client: any){
 
     const folderMethods = {
-        create: function(req, res) {
+        create: function(req: express.Request, res: express.Response) {
             if (!req.body || !req.body.folder_name) {
                 return res.json("can't add empty folderName")
             } else if (typeof req.body.folder_name !== "string") {
@@ -13,44 +14,44 @@ module.exports = function(client){
                 })
             }
         
-            client.folders.create(0, req.body.folder_name).then(folderInfo => {
+            client.folders.create(0, req.body.folder_name).then((folderInfo: any) => {
                 return res.json({
                     status: 400,
                     data: folderInfo
                 })
-            }).catch(err => {
+            }).catch((err: any) => {
                 return res.json(err)
             });
         }, //end create
         
-        get: function (req, res) {
+        get: function (req: express.Request, res: express.Response) {
             client.folders.get(/* "45416054928" */req.params.id, {
                 fields: 'name,shared_link,permissions,collections,sync_state'
-            }).then(folderInfo => {
+            }).then((folderInfo: any) => {
                 return res.json({
                     status: 200,
                     data: folderInfo
                 })
-            }).catch(err => {
+            }).catch((err:any) => {
                 return res.json(err)
             })
         }, //end get
         
-        getItems: function (req, res) {
+        getItems: function (req: express.Request, res: express.Response) {
             client.folders.getItems(/* "45416054928" */req.params.id, {
                 fields: 'name,shared_link,permissions,collections,sync_state'
-            }).then(folderInfo => {
+            }).then((folderInfo: any) => {
                 return res.json({
                     status: 200,
                     data: folderInfo
                 })
-            }).catch(err => {
+            }).catch((err: any) => {
                 return res.json(err)
             })
         }, //end get
 
 
-        search: function (req, res) {
+        search: function (req: express.Request, res: express.Response) {
             client.search.query(req.params.folder_name, 
                 {
                     fields: 'name,modified_at,size,extension,permissions,sync_state, collections',
@@ -59,12 +60,12 @@ module.exports = function(client){
                     limit: 5,
                     offset: 0,
                 }
-            ).then(folders => {
+            ).then((folders: any[]) => {
                 return res.json({
                     status: 200,
                     data: folders
                 })
-            }).catch(err => {
+            }).catch((err: any) => {
                 return res.json(err)
             })
         } //end search
