@@ -75,10 +75,10 @@ module.exports = function(client){
     const express = require('express'),
     router = express.Router()
 
-    router.post("/folder", folderMethods.create)
-    router.get("/folder/:id", folderMethods.get)
-    router.get("/folder/:id/items", folderMethods.getItems)
-    router.get("/folder/search/:folder_name", folderMethods.search)
+    router.post("/folders", folderMethods.create)
+    router.get("/folders/:id", folderMethods.get)
+    router.get("/folders/:id/items", folderMethods.getItems)
+    router.get("/folders/search/:folder_name", folderMethods.search)
 
     return router;
     
