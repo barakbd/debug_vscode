@@ -15,6 +15,7 @@ const appRouter: Router = Router();
 readdirSync(
   join(__dirname, "../controllers/box")
 ).filter(f => f !== "*.spec.ts").forEach(controller => {
+  const routes = import(`../controllers/box/${controller}`).then()
   appRouter.use(
     "/box",
     import(`../controllers/box/${controller}`).then(createRoutes => {
