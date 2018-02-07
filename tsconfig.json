@@ -2,7 +2,7 @@
   "compilerOptions": {
     "alwaysStrict": true,
     "inlineSourceMap": true,
-    // "sourcemaps": true,
+    // "sourcemap": true,
     "strictNullChecks": true,
     "experimentalDecorators": true,
     "target": "es6",
@@ -14,5 +14,5 @@
     "noImplicitAny": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "src/exclude*.ts"]
+  "exclude": ["./node_modules", "src/exclude*.ts", "**/**.spec.ts"]
 }

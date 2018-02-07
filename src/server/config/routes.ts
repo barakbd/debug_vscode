@@ -2,21 +2,29 @@
 https://stackoverflow.com/questions/45023624/how-to-require-multiple-controllers-with-express
 https://www.terlici.com/2014/09/29/express-router.html
  */
-import * as express from "express";
-import * as fs from "fs";
-import * as path from "path";
+// declare function require(moduleName: string): any;
 
-const router: express.Router = express.Router();
-import { boxServiceAccountClient } from "./box_service_account";
+import { Router, Express } from "express";
+import { readdirSync } from "fs";
+import {join} from "path";
+import {boxServiceAccountClient} from "./box_service_account";
+// import {folderRoutes} from "../controllers/box/folder";
 
-const boxControllers: string[] = fs
-  .readdirSync(path.join(__dirname, "../controllers/box"))
-  .filter(f => f !== "link_card_folder.js");
+const appRouter: Router = Router();
 
+const boxControllers: string[] = readdirSync(
+  join(__dirname, "../controllers/box")
+).filter(f => f !== "*.spec.ts");
+
+// appRouter.use("/box", folderRoutes(boxServiceAccountClient))
 boxControllers.forEach(controller => {
-  router.use(
+  appRouter.use(
     "/box",
-    require(`../controllers/box/${controller}`)(boxServiceAccountClient)
-  );
+    require(`../controllers/box/${controller}`).default(boxServiceAccountClient)
+/*     import(`../controllers/box/${controller}`).then(boxController=>{
+      new boxController(boxServiceAccountClient)
+    })
+ */  );
 });
-export {router};
+ 
+export {appRouter};

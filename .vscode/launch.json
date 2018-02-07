@@ -8,26 +8,38 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "typescript",
+      "preLaunchTask": "tsc",
+      "program": "${workspaceFolder}/src/index.ts",
+      "runtimeArgs": ["-r", "dotenv/config"],
+      // "program": "${workspaceFolder}/dist/index.js",
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "sourceMaps": true,
+      "restart": true,
+      "protocol": "inspector",
+      "trace": "all",
+      "cwd": "${workspaceFolder}",
+
+/*       "env": {
+        "NODE_ENV": "development"
+      }
+ */    
+},
+    //Typescrip gulp
+    {
+      "type": "node",
+      "request": "launch",
       "name": "ts-npm-gulp-nodemon",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "gulp"],
       "port": 9229,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "sourceMaps": true,
+      "sourceMaps": true
       // "program": "${workspaceFolder}/src/index.ts",
       // "outFiles": ["${workspaceFolder}/dist/**.js"],
     },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "ts-node",
-      "preLaunchTask": "tsc",
-      "program": "${workspaceFolder}/src/index.ts",
-      "outFiles": ["${workspaceFolder}/dist/**.js"],
-      "sourceMaps": true,
-      "restart": true
-    },
+
     //Nodemon
     {
       "name": "Nodemon",
