@@ -1,7 +1,6 @@
 // Require the Box SDK and the fs module
 const BoxSDK = require("box-node-sdk");
 // import box from "box-node-sdk"; - throws ts error - implicit any
-console.log(process.env)
 var boxSDK = new BoxSDK({
 	clientID: process.env.BOX_CLIENT_ID,
 	clientSecret: process.env.BOX_CLIENT_SECRET,
@@ -11,7 +10,6 @@ var boxSDK = new BoxSDK({
 		passphrase: process.env.BOX_PASSPHRASE
 	}
 });
-console.log(boxSDK)
 // Get the service account client, used to create and manage app user accounts
 var boxServiceAccountClient = boxSDK.getAppAuthClient('enterprise', process.env.BOX_APP_ENTERPRISE_ID);
 
@@ -33,7 +31,7 @@ boxServiceAccountClient.users
   .then((serviceAccountUser: any) => {
     // Log the Service Account's login value which should contain "AutomationUser".
     // For example, AutomationUser_375517_dxVhfxwzLL@boxdevedition.com
-    console.log("Service Account - ", serviceAccountUser);
+    // console.log("Service Account - ", serviceAccountUser);
   })
   .catch((err: any) => {
     // Log any errors for debugging

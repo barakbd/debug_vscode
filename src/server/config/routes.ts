@@ -6,25 +6,25 @@ https://www.terlici.com/2014/09/29/express-router.html
 
 import { Router, Express } from "express";
 import { readdirSync } from "fs";
-import {join} from "path";
-import {boxServiceAccountClient} from "./box_service_account";
-// import {folderRoutes} from "../controllers/box/folder";
+import { join } from "path";
+import { boxServiceAccountClient } from "./box_service_account";
+import folderRoutes from "../controllers/box/folder";
 
 const appRouter: Router = Router();
 
-const boxControllers: string[] = readdirSync(
+readdirSync(
   join(__dirname, "../controllers/box")
-).filter(f => f !== "*.spec.ts");
-
-// appRouter.use("/box", folderRoutes(boxServiceAccountClient))
-boxControllers.forEach(controller => {
+).filter(f => f !== "*.spec.ts").forEach(controller => {
   appRouter.use(
     "/box",
-    require(`../controllers/box/${controller}`).default(boxServiceAccountClient)
-/*     import(`../controllers/box/${controller}`).then(boxController=>{
+    import(`../controllers/box/${controller}`).then(createRoutes => {
+      return createRoutes(boxServiceAccountClient);
+    })
+    /*     import(`../controllers/box/${controller}`).then(boxController=>{
       new boxController(boxServiceAccountClient)
     })
- */  );
+ */
+  );
 });
- 
-export {appRouter};
+
+export { appRouter };
