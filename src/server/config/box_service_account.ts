@@ -1,5 +1,6 @@
 // Require the Box SDK and the fs module
 const BoxSDK = require("box-node-sdk");
+// console.log("-------", process.env.NODE_ENV)
 // import box from "box-node-sdk"; - throws ts error - implicit any
 var boxSDK = new BoxSDK({
 	clientID: process.env.BOX_CLIENT_ID,

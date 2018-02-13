@@ -3,16 +3,20 @@
     "alwaysStrict": true,
     "inlineSourceMap": true,
     // "sourcemap": true,
-    "strictNullChecks": true,
+    "moduleResolution": "node", //to look up node_modules/@types/**
+    // "strictNullChecks": true,
     "experimentalDecorators": true,
     "target": "es6",
-    "lib": [ "es6" ],
+    "lib": ["es6"], //add dom for supertest
     "removeComments": true,
     "module": "commonjs",
-    "moduleResolution": "node",
     "outDir": "dist",
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "watch": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["./node_modules", "src/exclude*.ts", "**/**.spec.ts"]
+  "exclude": [
+    "./node_modules"
+    // "**/*.spec.ts"
+  ]
 }

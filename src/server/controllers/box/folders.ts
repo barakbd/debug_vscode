@@ -1,12 +1,13 @@
 import {
   Router,
   Request,
-  Response,
+  Response
   // NextFunction,
   // RequestHandler
 } from "express";
 
-export default function (boxClient: any) : Router{
+// import * as defaultExport from "../route-controller-module"
+const createRoutes: Function = (boxClient: any): Router => {
   const router: Router = Router();
 
   const folderMethods = new FolderMethods(boxClient);
@@ -14,21 +15,22 @@ export default function (boxClient: any) : Router{
   router.post("/", folderMethods.create);
   router.get("/:id/items", folderMethods.getItems);
   return router;
-}
+};
 
-export class FolderMethods {
+class FolderMethods {
   private _boxClientLocal: any;
 
   constructor(boxClient: any) {
     this._boxClientLocal = boxClient;
   } //end constructor
 
-  public get = (req: Request, res: Response) =>{
+  public get = (req: Request, res: Response) => {
     this._boxClientLocal.folders
       .get(/* "45416054928" */ req.params.id, {
         fields: "name,shared_link,permissions,collections,sync_state"
       })
       .then((folderInfo: any) => {
+        console.log("sdsdsdsdsd")
         return res.json({
           status: 200,
           data: folderInfo
@@ -37,9 +39,9 @@ export class FolderMethods {
       .catch((err: any) => {
         return res.json(err);
       });
-  } //end get
+  }; //end get
 
-  public create = (req: Request, res: Response):Response =>{
+  public create = (req: Request, res: Response): Response => {
     if (!req.body || !req.body.folder_name) {
       return res.json("can't add empty folderName");
     } else if (typeof req.body.folder_name !== "string") {
@@ -60,9 +62,9 @@ export class FolderMethods {
       .catch((err: any) => {
         return res.json(err);
       });
-  } //end create
+  }; //end create
 
-  public getItems = (req: Request, res: Response): Response =>{
+  public getItems = (req: Request, res: Response): Response => {
     return this._boxClientLocal.folders
       .getItems(/* "45416054928" */ req.params.id, {
         fields: "name,shared_link,permissions,collections,sync_state"
@@ -76,26 +78,9 @@ export class FolderMethods {
       .catch((err: any) => {
         return res.json(err);
       });
-  } //end getItems
+  }; //end getItems
 
-  public search = (req: Request, res: Response):Promise<Response> =>{
-    return this._boxClientLocal.search
-      .query(req.params.folder_name, {
-        fields:
-          "name,modified_at,size,extension,permissions,sync_state, collections",
-        type: "folder",
-        ancestor_folder_ids: 0,
-        limit: 5,
-        offset: 0
-      })
-      .then((folders: any[]) => {
-        return res.json({
-          status: 200,
-          data: folders
-        });
-      })
-      .catch((err: any) => {
-        return res.json(err);
-      });
-  } //end search
 } //end class FolderMethods
+
+export default createRoutes;
+

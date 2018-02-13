@@ -4,22 +4,19 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "identifier": "tsc",
+      "identifier": "tsc-watch",
       "type": "typescript",
       "tsconfig": "tsconfig.json",
-      "problemMatcher": [
-        "$tsc"
-      ],
+      "problemMatcher": ["$tsc-watch"],
+      "isBackground": true,
       "group": {
         "kind": "build",
         "isDefault": true
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "new"
       }
-    },
-    {
-      "identifier": "gulp-compile",
-      "type": "gulp",
-      "task": "compile",
-      "problemMatcher": []
     }
   ]
 }

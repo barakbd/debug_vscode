@@ -23,9 +23,9 @@ class App {
   } //end configureBodyParser
 
   private mountRoutes(): void {
-    expressRouter.get("/hello test", (req, res) => {
+    this.express.get("/test", (req, res) => {
       res.json({
-        message: "Hello you!"
+        message: "Hello sdsdsdsd!"
       });
     });
     this.express.use(appRouter);

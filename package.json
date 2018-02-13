@@ -2,12 +2,11 @@
   "name": "box_node_cdt",
   "version": "1.0.0",
   "description": "In memory, PRomises, ES6, Node v6.x, express, data structures, Restful",
-  "main": "/dist/index.js",
+  "main": "/dist/server.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "gulp": "gulp",
-    "tsc": "tsc",
-    "test": "NODE_ENV=test mocha mocha --reporter spec --compilers ts:ts-node/register 'dist/**/*.test.ts'",
+    "start": "node -r dotenv/config dist/server.js",
+    "debug": "nodemon -r dotenv/config --no-lazy --inspect-brk=9229 --watch dist --ignore *.spec.ts",
+    "test": "mocha -r ts-node/register -r dotenv/config -w --watch-extensions ts,tsx --recursive src/**/*.{ts,tsx}",
     "test-unit": "NODE_ENV=test mocha --require co-mocha 'dist/*.spec.js'",
     "dev-test-watch": "mocha-typescript-watch"
   },
@@ -28,12 +27,9 @@
     "chai-http": "^3.0.0",
     "dotenv": "^5.0.0",
     "gulp": "^3.9.1",
-    "gulp-nodemon": "^2.2.1",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-typescript": "^3.2.4",
     "mocha": "^5.0.0",
-    "mocha-typescript": "^1.1.12",
     "nodemon": "^1.14.12",
+    "ts-node": "^4.1.0",
     "typescript": "^2.7.1"
   }
 }

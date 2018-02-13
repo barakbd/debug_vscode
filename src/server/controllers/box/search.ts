@@ -1,18 +1,25 @@
-import {
+ import {
   Router,
   Request,
-  Response,
+  Response
   // NextFunction,
   // RequestHandler
 } from "express";
 
-export default function (boxClient: any) : Router{
+
+export default function(req:Request, res: Response) {
+  console.log("---------- search --------------");
+}
+
+/*
+
+const createRoutes: Function = function(boxClient: any): Router {
   const router: Router = Router();
 
   const searchMethods = new SearchMethods(boxClient);
   router.get("/:type/:name", searchMethods.search);
   return router;
-}
+};
 
 export class SearchMethods {
   private _boxClientLocal: any;
@@ -21,7 +28,7 @@ export class SearchMethods {
     this._boxClientLocal = boxClient;
   } //end constructor
 
-  public search = (req: Request, res: Response):Promise<Response> =>{
+  public search = (req: Request, res: Response): Promise<Response> => {
     return this._boxClientLocal.search
       .query(req.params.name, {
         fields:
@@ -40,5 +47,8 @@ export class SearchMethods {
       .catch((err: any) => {
         return res.json(err);
       });
-  } //end search
+  }; //end search
 } //end class SearchMethods
+
+export default createRoutes;
+ */

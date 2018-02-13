@@ -4,61 +4,122 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-    //Typescript
     {
       "type": "node",
       "request": "launch",
-      "name": "typescript",
-      "preLaunchTask": "tsc",
-      "program": "${workspaceFolder}/src/index.ts",
-      "runtimeArgs": ["-r", "dotenv/config"],
-      // "program": "${workspaceFolder}/dist/index.js",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "sourceMaps": true,
-      "restart": true,
-      "protocol": "inspector",
-      "trace": "all",
+      "name": "nodemon-npm",
+      "preLaunchTask": "tsc-watch", //Can comment out this line and run npx tsc in a seperate terminal to see transpile process
       "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal"
-
-/*       "env": {
-        "NODE_ENV": "development"
-      }
- */    
-},
-    //Typescrip gulp
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "ts-npm-gulp-nodemon",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "gulp"],
-      "port": 9229,
+      "program": "${workspaceFolder}/dist/server.js",
+      "runtimeArgs": ["run-script", "debug"],
+      "restart": true,
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "sourceMaps": true
-      // "program": "${workspaceFolder}/src/index.ts",
-      // "outFiles": ["${workspaceFolder}/dist/**.js"],
+      "runtimeVersion": "9.4.0", //for NVM
+      "protocol": "inspector",
+      // "envFile": "${workspaceFolder}/.env",
+      // "trace": false,
+      "port": 9229
     },
-
-    //Nodemon
     {
-      "name": "Nodemon",
       "type": "node",
       "request": "launch",
+      "name": "nodemon-global",
+      "preLaunchTask": "tsc-watch", //Can comment out this line and run npx tsc in a seperate terminal to see transpile process
       "runtimeExecutable": "nodemon",
-      "program": "${workspaceFolder}/server.js",
+      "runtimeArgs": ["-r", "dotenv/config", "--no-lazy"],
+      "args": ["--watch", "dist", "--ignore", "*.spec.ts", "-L"],
+      "program": "${workspaceFolder}/dist/server.js",
       "restart": true,
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
+      "internalConsoleOptions": "neverOpen",
+      "runtimeVersion": "9.4.0",
+      "protocol": "inspector"
     },
-    //Node
     {
       "type": "node",
       "request": "launch",
-      "name": "Node",
-      "program": "${workspaceFolder}/server.js",
-      "restart": true
+      "name": "Mocha Typescript - ts-node",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "sourceMaps": true,
+      "args": [
+        "-u",
+        "tdd",
+        "--timeout",
+        "999999",
+        "--colors",
+        // "${workspaceFolder}/test",
+        "-r",
+        "ts-node/register",
+        "-r",
+        "dotenv/config",
+        "-w",
+        "--watch-extensions",
+        "ts,tsx",
+        "--recursive",
+        "src/**/*.{ts,tsx}"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "stopOnEntry": false,
+      "restart": false
+      // "runtimeArgs": ["-r", "ts-node/register", "-r", "dotenv/config"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Mocha Typescript",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "preLaunchTask": "tsc",
+      "sourceMaps": true,
+      // "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "args": [
+        "-u",
+        "tdd",
+        "--timeout",
+        "999999",
+        "--colors",
+        "-r",
+        "dotenv/config",
+        // "-w",
+        // "--watch-extensions",
+        // "ts,tsx",
+        "--recursive",
+        "dist/**/*.js"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "stopOnEntry": false
+      // "runtimeArgs": ["-r", "ts-node/register", "-r", "dotenv/config"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Mocha Typescript - current file",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "sourceMaps": true,
+      "args": [
+        "-u",
+        "tdd",
+        "--timeout",
+        "999999",
+        "--colors",
+        // "${workspaceFolder}/test",
+        "-r",
+        "ts-node/register",
+        "-r",
+        "dotenv/config",
+        "-w",
+        "--watch-extensions",
+        "ts,tsx",
+        "${file}"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "stopOnEntry": false
+      // "runtimeArgs": ["-r", "ts-node/register", "-r", "dotenv/config"]
     }
   ]
 }
