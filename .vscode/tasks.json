@@ -1,0 +1,22 @@
+//http://www.andrewconnell.com/blog/debugging-node-js-projects-with-typescript-and-vs-code-digging-into-sourcemaps
+
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "identifier": "tsc-watch",
+      "type": "typescript",
+      "tsconfig": "tsconfig.json",
+      "problemMatcher": ["$tsc-watch"],
+      "isBackground": true,
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "new"
+      }
+    }
+  ]
+}
