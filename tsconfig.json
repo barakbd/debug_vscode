@@ -7,7 +7,7 @@
     // "strictNullChecks": true,
     "experimentalDecorators": true,
     "target": "es6",
-    "lib": ["es6"], //add dom for supertest
+    "lib": ["es6", "dom"], //add dom for supertest
     "removeComments": true,
     "module": "commonjs",
     "outDir": "dist",

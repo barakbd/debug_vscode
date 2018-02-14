@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "nodemon-npm",
-      "preLaunchTask": "tsc-watch", //Can comment out this line and run npx tsc in a seperate terminal to see transpile process
+      // "preLaunchTask": "tsc-watch", //Can comment out this line and run "npx tsc" in a seperate terminal to see transpile process
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "npm",
       "program": "${workspaceFolder}/dist/server.js",
@@ -17,7 +17,7 @@
       "sourceMaps": true,
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
+      "internalConsoleOptions": "openOnFirstSessionStart",
       "runtimeVersion": "9.4.0", //for NVM
       "protocol": "inspector",
       // "envFile": "${workspaceFolder}/.env",
