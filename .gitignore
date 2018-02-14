@@ -61,4 +61,4 @@ typings/
 box*config*.json
 
 #javascript files
-#dist/
+dist/
