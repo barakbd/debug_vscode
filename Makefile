@@ -1,5 +1,7 @@
-NAME   := acmecorp/foo
-TAG    := $$(git log -1 --pretty=%!H(MISSING))
+NAME   := cdt-box/foo
+# TAG    := $$(git log -1 --pretty=%!H(MISSING))
+TAG    := $$(git tag)
+
 IMG    := ${NAME}:${TAG}
 LATEST := ${NAME}:latest
 

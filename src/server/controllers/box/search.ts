@@ -1,4 +1,4 @@
- import {
+import {
   Router,
   Request,
   Response
@@ -6,49 +6,48 @@
   // RequestHandler
 } from "express";
 
-
-export default function(req:Request, res: Response) {
-  console.log("---------- search --------------");
-}
-
-/*
-
-const createRoutes: Function = function(boxClient: any): Router {
+// import * as defaultExport from "../route-controller-module"
+const createRoutes: Function = (boxClient: any): Router => {
   const router: Router = Router();
 
   const searchMethods = new SearchMethods(boxClient);
-  router.get("/:type/:name", searchMethods.search);
+  router.get("/:type/:name/:ancestorFolderId", searchMethods.get);
   return router;
 };
 
-export class SearchMethods {
+// export default createRoutes
+
+
+class SearchMethods {
   private _boxClientLocal: any;
 
   constructor(boxClient: any) {
     this._boxClientLocal = boxClient;
   } //end constructor
 
-  public search = (req: Request, res: Response): Promise<Response> => {
-    return this._boxClientLocal.search
+  public get = (req: Request, res: Response) => {
+
+    this._boxClientLocal.search
       .query(req.params.name, {
-        fields:
-          "name,modified_at,size,extension,permissions,sync_state, collections",
+        // fields: "name,shared_link,permissions,collections,sync_state",
         type: req.params.type,
-        ancestor_search_ids: 0,
-        limit: 5,
-        offset: 0
+        ancestor_folder_ids: req.params.ancestorFolderId
       })
-      .then((searchs: any[]) => {
-        return res.json({
-          status: 200,
-          data: searchs
-        });
+      .then((results: any) => {
+        console.log("sdsdsdsdsd");
+        return res.json(results);
       })
       .catch((err: any) => {
         return res.json(err);
       });
-  }; //end search
+  }; //end get
 } //end class SearchMethods
 
-export default createRoutes;
- */
+
+export default function (boxClient: any): Router {
+  const router: Router = Router();
+
+  const searchMethods = new SearchMethods(boxClient);
+  router.get("/:type/:name/:ancestorFolderId", searchMethods.get);
+  return router;
+};;
