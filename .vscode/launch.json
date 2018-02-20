@@ -17,7 +17,7 @@
       "sourceMaps": true,
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "console": "integratedTerminal",
-      "internalConsoleOptions": "openOnFirstSessionStart",
+      "internalConsoleOptions": "neverOpen",
       "runtimeVersion": "9.4.0", //for NVM
       "protocol": "inspector",
       // "envFile": "${workspaceFolder}/.env",

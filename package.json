@@ -1,7 +1,7 @@
 {
   "name": "box_node_cdt",
   "version": "1.0.0",
-  "description": "In memory, PRomises, ES6, Node v6.x, express, data structures, Restful",
+  "description": "microservice for interfacing with Box API",
   "main": "/dist/server.js",
   "scripts": {
     "start": "node -r dotenv/config dist/server.js",
@@ -10,7 +10,7 @@
     "test-unit": "NODE_ENV=test mocha --require co-mocha 'dist/*.spec.js'",
     "dev-test-watch": "mocha-typescript-watch"
   },
-  "author": "",
+  "author": "Barak Ben-David",
   "license": "MIT",
   "dependencies": {
     "box-node-sdk": "^1.12.1",

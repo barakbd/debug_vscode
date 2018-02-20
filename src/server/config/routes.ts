@@ -7,22 +7,28 @@ import { Router, Express } from "express";
 import { readdirSync } from "fs";
 import { join, basename } from "path";
 import { boxServiceAccountClient } from "./box_service_account";
-import createRoutesFolder from "../controllers/box/folders";
 
 const appRouter: Router = Router();
+/* 
+import createRoutesFolder from "../controllers/box/folders";
 appRouter.use("/box/folders", createRoutesFolder(boxServiceAccountClient));
+ */
 
-/* readdirSync(join(__dirname, "../controllers/box"))
+ 
+/* import createRoutesFolder from "../controllers/box/search";
+appRouter.use("/box/search", createRoutesFolder(boxServiceAccountClient));
+ */
+
+
+ readdirSync(join(__dirname, "../controllers/box"))
   .filter((fileName: string) => {
-    return (fileName !=="*.spec.*") && (fileName !== "search.js");
+    return (fileName !=="**.spec.**")/*  && (fileName !== "search.js") */;
   })
   .forEach(controllerFile => {
     const controllerBaseName = basename(controllerFile, ".js");
-    import(`../controllers/box/${controllerBaseName}`)
+    // require(`../controllers/box/${controllerBaseName}`)
+     import(`../controllers/box/${controllerBaseName}`)
       .then(controller => {
-        // if (typeof controller.default === "function") {
-        //   console.log("******** - ", controller);
-        // }
         appRouter.use(
           `/box/${controllerBaseName}`,
           controller.default(boxServiceAccountClient)
@@ -31,6 +37,7 @@ appRouter.use("/box/folders", createRoutesFolder(boxServiceAccountClient));
       .catch(error => {
         console.log(error);
       });
-  }); //end forEach */
+  }); //end forEach 
+
 
 export { appRouter };
