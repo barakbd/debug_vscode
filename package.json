@@ -13,6 +13,8 @@
   "author": "Barak Ben-David",
   "license": "MIT",
   "dependencies": {
+    "@types/async": "^2.0.47",
+    "async": "^2.6.0",
     "box-node-sdk": "^1.12.1",
     "express": "^4.16.2"
   },
