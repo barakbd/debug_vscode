@@ -1,12 +1,11 @@
 interface AcquisitionCollectionInterface {
-  name: string;
-  id: 1;
+  acq_name: string;
+  acq_id: 1;
   folders: {
-    folder_name: string;
-    folder_id: number;
+    acq_folder: { [index: number]: any }; //folder_data
+    // acq_folder_id: number;
     ws_folders: Array<{
-      ws_folder_name: string;
-      ws_folder_id: number;
+      ws_name: { [index: number]: any }; //folder_data
     }>;
   };
 }
@@ -18,4 +17,10 @@ interface Prompts {
     file_name: string;
     file_id: number;
   }>;
+}
+
+interface collaborations {
+  folder_id: number,
+  user_id: number,
+  collaboration_id: number
 }
