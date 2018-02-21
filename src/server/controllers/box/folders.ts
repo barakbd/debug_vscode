@@ -17,6 +17,8 @@ const createRoutes: Function = (boxClient: any): Router => {
   return router;
 };
 
+export default createRoutes;
+
 class FolderMethods {
   private _boxClientLocal: any;
 
@@ -81,6 +83,3 @@ class FolderMethods {
   }; //end getItems
 
 } //end class FolderMethods
-
-export default createRoutes;
-

@@ -11,11 +11,11 @@ const createRoutes: Function = (boxClient: any): Router => {
   const router: Router = Router();
 
   const searchMethods = new SearchMethods(boxClient);
-  router.get("/:type/:name/:ancestorFolderId", searchMethods.get);
+  router.get("/", searchMethods.get);
   return router;
 };
 
-// export default createRoutes
+export default createRoutes;
 
 
 class SearchMethods {
@@ -28,13 +28,12 @@ class SearchMethods {
   public get = (req: Request, res: Response) => {
 
     this._boxClientLocal.search
-      .query(req.params.name, {
+      .query(req.query.name, {
         // fields: "name,shared_link,permissions,collections,sync_state",
-        type: req.params.type,
-        ancestor_folder_ids: req.params.ancestorFolderId
+        type: req.query.type,
+        ancestor_folder_ids: req.query.ancestor_folder_id
       })
       .then((results: any) => {
-        console.log("sdsdsdsdsd");
         return res.json(results);
       })
       .catch((err: any) => {
@@ -44,10 +43,10 @@ class SearchMethods {
 } //end class SearchMethods
 
 
-export default function (boxClient: any): Router {
-  const router: Router = Router();
+// export default function (boxClient: any): Router {
+//   const router: Router = Router();
 
-  const searchMethods = new SearchMethods(boxClient);
-  router.get("/:type/:name/:ancestorFolderId", searchMethods.get);
-  return router;
-};;
+//   const searchMethods = new SearchMethods(boxClient);
+//   router.get("/:type/:name/:ancestorFolderId", searchMethods.get);
+//   return router;
+// };;
