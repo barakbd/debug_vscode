@@ -27,9 +27,7 @@ class CollaborationMethods {
 
   public get = (req: Request, res: Response) => {
     this._boxClientLocal.collaborations
-      .get(/* "45416054928" */ req.params.id, {
-        fields: "name,shared_link,permissions,collections,sync_state"
-      })
+      .get(/* "45416054928" */ req.params.id)
       .then((collaborationInfo: any) => {
         console.log("sdsdsdsdsd")
         return res.json({
