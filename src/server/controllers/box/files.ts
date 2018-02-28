@@ -13,7 +13,6 @@ const createRoutes: Function = (boxClient: any): Router => {
   const fileMethods = new FileMethods(boxClient);
   router.post("/", fileMethods.create);
   router.get("/:id", fileMethods.get);
-  router.get("/:id/items", fileMethods.getItems);
   return router;
 };
 
