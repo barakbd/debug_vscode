@@ -6,7 +6,7 @@
     {
       "identifier": "tsc-watch",
       "type": "typescript",
-      "tsconfig": "tsconfig.json",
+      "tsconfig": "tsconfig-dev.json",
       "problemMatcher": ["$tsc-watch"],
       "isBackground": true,
       "group": {

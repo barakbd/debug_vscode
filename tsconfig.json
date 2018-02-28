@@ -12,7 +12,6 @@
     "module": "commonjs",
     "outDir": "dist",
     "noImplicitAny": true,
-    "watch": true
   },
   "include": ["src/**/*.ts"],
   "exclude": [
