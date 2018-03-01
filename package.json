@@ -5,7 +5,9 @@
   "main": "/dist/server.js",
   "scripts": {
     "start": "node",
-    "debug": "nodemon -r dotenv/config --no-lazy --inspect-brk --watch dist --ignore *.spec.ts",
+    "postinstall": "tsc",
+    "debug-inline": "nodemon -r dotenv/config --no-lazy --inspect-brk=9229 --watch dist --ignore *.spec.ts",
+    "debug": "nodemon",
     "test": "mocha -r ts-node/register -r dotenv/config -w --watch-extensions ts,tsx --recursive src/**/*.{ts,tsx}",
     "build": "tsc",
     "test-unit": "NODE_ENV=test mocha --require co-mocha 'dist/*.spec.js'",

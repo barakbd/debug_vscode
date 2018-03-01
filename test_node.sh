@@ -60,8 +60,18 @@ function echo_if {
 
 # ============================================== Functions
 
+which_node=$(which node);
+
+set -e;
+
+if [[ -z "$which_node" ]]; then
+    # install the desired version
+
+    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
 # if node -v >/dev/null 2>&1 = "v8.5.0";
-if [[ "$(node -v)" ==  "v9"* ]]
+elif [[ "$(node -v)" ==  "v9"* ]]
   then
   echo_pass `node -v`
   else

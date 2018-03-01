@@ -1,4 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "watch": true
+  "compilerOptions":{
+    "watch": true
+  }
 }

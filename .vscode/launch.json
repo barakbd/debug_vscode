@@ -16,8 +16,8 @@
       "restart": true,
       "sourceMaps": true,
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
+      "console":"integratedTerminal",
+      "internalConsoleOptions":"neverOpen",
       "runtimeVersion": "9.4.0", //for NVM
       "protocol": "inspector",
       // "envFile": "${workspaceFolder}/.env",

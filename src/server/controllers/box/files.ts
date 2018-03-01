@@ -55,6 +55,7 @@ class FileMethods {
         fields: "name,shared_link,permissions,collections,sync_state"
       })
       .then((fileInfo: any) => {
+        console.log("sdsdsdsd")
         return res.status(200).json(fileInfo);
       })
       .catch((err: any) => {

@@ -2,11 +2,12 @@
   "compilerOptions": {
     "alwaysStrict": true,
     "inlineSourceMap": true,
-    "moduleResolution": "node",
-    "strictNullChecks": true,
+    // "sourcemap": true,
+    "moduleResolution": "node", //to look up node_modules/@types/**
+    // "strictNullChecks": true,
     "experimentalDecorators": true,
     "target": "es6",
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "dom"], //add dom for supertest
     "removeComments": true,
     "module": "commonjs",
     "outDir": "dist",
@@ -15,5 +16,6 @@
   "include": ["src/**/*.ts"],
   "exclude": [
     "./node_modules"
+    // "**/*.spec.ts"
   ],
 }
