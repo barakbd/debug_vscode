@@ -25,7 +25,7 @@ class App {
   private mountRoutes(): void {
     this.express.get("/test", (req, res) => {
       res.json({
-        message: "Hello 88888!"
+        message: "Hello yuiohkh!"
       });
     });
     this.express.use(appRouter);

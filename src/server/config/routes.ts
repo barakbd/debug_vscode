@@ -20,17 +20,17 @@ appRouter.use("/box/search", createRoutesFolder(boxServiceAccountClient));
  */
 
 
- readdirSync(join(__dirname, "../controllers/box"))
+ readdirSync(join(__dirname, "../controllers"))
   .filter((fileName: string) => {
     return (fileName !=="**.spec.**")/*  && (fileName !== "search.js") */;
   })
   .forEach(controllerFile => {
     const controllerBaseName = basename(controllerFile, ".js");
     // require(`../controllers/box/${controllerBaseName}`)
-     import(`../controllers/box/${controllerBaseName}`)
+     import(`../controllers/${controllerBaseName}`)
       .then(controller => {
         appRouter.use(
-          `/box/${controllerBaseName}`,
+          `/${controllerBaseName}`,
           controller.default(boxServiceAccountClient)
         );
       })
