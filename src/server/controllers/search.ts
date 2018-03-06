@@ -34,19 +34,10 @@ class SearchMethods {
         ancestor_folder_ids: req.query.ancestor_folder_id
       })
       .then((results: any) => {
-        return res.json(results);
+        return res.status(200).json(results);
       })
       .catch((err: any) => {
-        return res.json(err);
+        return res.status(err.statusCode).json(err);
       });
   }; //end get
 } //end class SearchMethods
-
-
-// export default function (boxClient: any): Router {
-//   const router: Router = Router();
-
-//   const searchMethods = new SearchMethods(boxClient);
-//   router.get("/:type/:name/:ancestorFolderId", searchMethods.get);
-//   return router;
-// };;

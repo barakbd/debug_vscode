@@ -28,12 +28,12 @@ class FolderMethods {
 
   public create = (req: Request, res: Response): Response => {
     return this._boxClientLocal.folders
-      .create(req.body.ancestor_folder_id, req.body.folder_to_create)
+      .create(req.body.ancestor_folder_id, req.body.new_folder_name)
       .then((folderInfo: any) => {
         return res.status(200).json(folderInfo);
       })
       .catch((err: any) => {
-        return res.status(400).json(err);
+        return res.status(err.statusCode).json(err);
       });
   }; //end create
 
@@ -46,7 +46,7 @@ class FolderMethods {
         return res.status(200).json(folderInfo);
       })
       .catch((err: any) => {
-        return res.status(400).json(err);
+        return res.status(err.statusCode).json(err);
       });
   }; //end get
 
@@ -59,7 +59,7 @@ class FolderMethods {
         return res.status(200).json(folderInfo);
       })
       .catch((err: any) => {
-        return res.status(400).json(err);
+        return res.status(err.statusCode).json(err);
       });
   }; //end getItems
 

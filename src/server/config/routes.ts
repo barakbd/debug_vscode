@@ -22,7 +22,7 @@ appRouter.use("/box/search", createRoutesFolder(boxServiceAccountClient));
 
  readdirSync(join(__dirname, "../controllers"))
   .filter((fileName: string) => {
-    return (fileName !=="**.spec.**")/*  && (fileName !== "search.js") */;
+    return (fileName != "**.spec.js") && (fileName !== "standardResponses.js") ;
   })
   .forEach(controllerFile => {
     const controllerBaseName = basename(controllerFile, ".js");

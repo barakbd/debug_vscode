@@ -27,40 +27,24 @@ class FileMethods {
 
   public create = (req: Request, res: Response): Response => {
     return this._boxClientLocal.files
-      .create(req.body.ancestor_file_id, req.body.file_to_create)
+      .create(req.body.ancestor_file_id, req.body.new_file_name)
       .then((fileInfo: any) => {
         return res.status(200).json(fileInfo);
       })
       .catch((err: any) => {
-        return res.status(400).json(err);
+        return res.status(err.statusCode).json(err);
       });
   }; //end create
 
   public get = (req: Request, res: Response) => {
     this._boxClientLocal.files
-      .get(/* "45416054928" */ req.params.id, {
-        fields: "name,shared_link,permissions,collections,sync_state"
-      })
+      .get(req.params.id)
       .then((fileInfo: any) => {
         return res.status(200).json(fileInfo);
       })
       .catch((err: any) => {
-        return res.status(400).json(err);
+        return res.status(err.statusCode).json(err);
       });
   }; //end get
-
-  public getItems = (req: Request, res: Response): Response => {
-    return this._boxClientLocal.files
-      .getItems(/* "45416054928" */ req.params.id, {
-        fields: "name,shared_link,permissions,collections,sync_state"
-      })
-      .then((fileInfo: any) => {
-        console.log("sdsdsdsd")
-        return res.status(200).json(fileInfo);
-      })
-      .catch((err: any) => {
-        return res.status(400).json(err);
-      });
-  }; //end getItems
 
 } //end class FileMethods
