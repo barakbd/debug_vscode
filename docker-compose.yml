@@ -3,8 +3,10 @@ version: '2.1'
 services:
   cdt-box:
     image: cdt-box
+    command: npm run debug
+    volumes: 
+          - ./dist:/server/dist
     build: .
-    environment:
-      NODE_ENV: production
     ports:
       - 4000:4000
+      - 9222:9222
