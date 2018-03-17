@@ -1,32 +1,38 @@
 import {
   Router,
   Request,
-  Response
-  // NextFunction,
-  // RequestHandler
+  Response,
+  NextFunction,
+  RequestHandler
 } from "express";
 
-// import * as defaultExport from "../route-controller-module"
-const createRoutes: Function = (boxClient: any): Router => {
-  const router: Router = Router();
-
-  const folderMethods = new FolderMethods(boxClient);
-  router.post("/", folderMethods.create);
-  router.get("/:id", folderMethods.get);
-  router.get("/:id/items", folderMethods.getItems);
-  return router;
-};
-
-export default createRoutes;
-
-class FolderMethods {
+class FolderRoutes {
+  static instance: FolderRoutes;
+  private _router: Router;
   private _boxClientLocal: any;
 
   constructor(boxClient: any) {
     this._boxClientLocal = boxClient;
+    this._router = Router();
+    this._router.post("/", this._create);
+    this._router.get("/:id", this._get);
+    this._router.get("/:id/items", this._getItems);
   } //end constructor
 
-  public create = (req: Request, res: Response): Response => {
+  //return singleton
+  static getRouter(boxClient: any): Router {
+    this.instance === undefined
+      ? (this.instance = new FolderRoutes(boxClient))
+      : (this.instance = this.instance);
+    return this.instance._router;
+  }
+
+  /******************* PRIVATE METHODS ****************/
+  private _create: RequestHandler = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Response => {
     return this._boxClientLocal.folders
       .create(req.body.ancestor_folder_id, req.body.new_folder_name)
       .then((folderInfo: any) => {
@@ -37,8 +43,12 @@ class FolderMethods {
       });
   }; //end create
 
-  public get = (req: Request, res: Response) => {
-    this._boxClientLocal.folders
+  private _get: RequestHandler = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Response => {
+    return this._boxClientLocal.folders
       .get(/* "45416054928" */ req.params.id, {
         fields: "name,shared_link,permissions,collections,sync_state"
       })
@@ -50,7 +60,11 @@ class FolderMethods {
       });
   }; //end get
 
-  public getItems = (req: Request, res: Response): Response => {
+  private _getItems: RequestHandler = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Response => {
     return this._boxClientLocal.folders
       .getItems(/* "45416054928" */ req.params.id, {
         fields: "name,shared_link,permissions,collections,sync_state"
@@ -62,5 +76,8 @@ class FolderMethods {
         return res.status(err.statusCode).json(err);
       });
   }; //end getItems
-
 } //end class FolderMethods
+
+export default (boxClient: any): Router => {
+  return FolderRoutes.getRouter(boxClient);
+};

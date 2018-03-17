@@ -1,60 +1,60 @@
-// https://github.com/box/box-node-sdk/blob/master/docs/files.md#upload-a-file
-
 import {
   Router,
   Request,
   Response,
-  NextFunction
-  // NextFunction,
-  // RequestHandler
+  NextFunction,
+  RequestHandler
 } from "express";
-
-import * as multer from "multer";
 import * as mongoose from "mongoose";
-import { FileModel } from "../models/File";
-// import { prop, Typegoose, ModelType, InstanceType } from "typegoose";
+import { File, FileModel } from "../models/File";
 
+//Needed for handling files
+import * as multer from "multer";
+import { InstanceType } from "typegoose";
+const upload: multer.Instance = multer({ storage: multer.memoryStorage() });
 
-const upload = multer({ storage: multer.memoryStorage() });
-// When encountering an error, multer will delegate the error to express.
-
-const createRoutes: Function = (boxClient: any): Router => {
-  const router: Router = Router();
-
-  const fileMethods = new FileMethods(boxClient);
-  router.post("/:parent_folder_id", upload.single("file"), fileMethods.create);
-  router.get("/:box_file_id", fileMethods.get);
-  // router.put("/getSharedLink/:box_file_id", fileMethods.getSharedLink);
-  return router;
-};
-
-export default createRoutes;
-
-class FileMethods {
+class FileRoutes {
+  static instance: FileRoutes;
+  private _router: Router;
   private _boxClientLocal: any;
 
   constructor(boxClient: any) {
     this._boxClientLocal = boxClient;
+    this._router = Router();
+    this._router.post("/", upload.single("file"), this._create);
+    this._router.get("/:mongo_file_id", this._get);
   } //end constructor
 
-  public create = (req: Request, res: Response, next: NextFunction) => {
+  //return singleton
+  static getRouter(boxClient: any): Router {
+    this.instance === undefined
+      ? (this.instance = new FileRoutes(boxClient))
+      : (this.instance = this.instance);
+    return this.instance._router;
+  }
+
+  /******************* PRIVATE METHODS ****************/
+  private _create: RequestHandler = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Response => {
     const file: Express.Multer.File = req.file;
     // const fileBuffer: Buffer = file.buffer; - informative
 
-    this._boxClientLocal.files
-      .uploadFile(req.params.parent_folder_id, file.originalname, file.buffer)
+    return this._boxClientLocal.files
+      .uploadFile(req.body.target_folder_id, file.originalname, file.buffer)
       .then((uploadFileSuccess: any) => {
         this._boxClientLocal.files
           .update(uploadFileSuccess.entries[0].id, {
             shared_link: this._boxClientLocal.accessLevels.DEFAULT
           })
           .then((updatedFileCuccess: any) => {
-            const newFile = new FileModel();
-            newFile.file_name = updatedFileCuccess.name;
+            let newFile: InstanceType<File> = new FileModel();
             newFile.metadata = updatedFileCuccess;
             newFile
               .save()
-              .then((newFileSaveSuccess: mongoose.MongooseDocument) => {
+              .then((newFileSaveSuccess: InstanceType<File> | Document) => {
                 res.status(200).json(newFileSaveSuccess);
               });
           })
@@ -69,31 +69,21 @@ class FileMethods {
       .catch((uploadError: any) => {
         return res.status(uploadError.statusCode).json(uploadError);
       });
-  }; //end create
+  }; //end _create
 
-  public get = (req: Request, res: Response) => {
-    this._boxClientLocal.files
-      .get(req.params.box_file_id)
-      .then((fileInfo: any) => {
-        return res.status(200).json(fileInfo);
+  private _get: RequestHandler = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | void> => {
+    return FileModel.findById(req.params.mongo_file_id)
+      .then((fileDocument: InstanceType<File>) => {
+        return res.status(200).json(fileDocument);
       })
-      .catch((err: any) => {
-        return res.status(err.statusCode).json(err);
-      });
-  }; //end get
-
-  /*
-  public getSharedLink = (req: Request, res: Response) => {
-    this._boxClientLocal.files
-      .update(req.params.box_file_id, {
-        shared_link: this._boxClientLocal.accessLevels.DEFAULT,
-      })
-      .then((fileInfo: any) => {
-        return res.status(200).json(fileInfo);
-      })
-      .catch((err: any) => {
-        return res.status(err.statusCode).json(err);
-      });
-  }; //end get
-*/
+      .catch((err: any) => next(err));
+  }; //end _get
 } //end class FileMethods
+
+export default (boxClient: any): Router => {
+  return FileRoutes.getRouter(boxClient);
+};

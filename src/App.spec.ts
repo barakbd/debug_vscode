@@ -7,7 +7,7 @@ import { use, request, expect, assert, should } from "chai";
 import chaiHttp = require("chai-http");
 // import chaiHttp = require("chai-http");
 // import * as supertest from "supertest";
-import app from "./app";
+import {app} from "./app";
 // import server from "./server"
 use(chaiHttp);
 describe("GET /folders/0", () => {

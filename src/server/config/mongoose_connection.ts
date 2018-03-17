@@ -24,11 +24,9 @@ mongoose.connect(uri, connectionOptions).then(
     console.info("mogoose connect - success");
     // console.info(`uri - ${uri}`);
     // console.info(`connectionOptions - ${connectionOptions}`);
-  },
-  err => {
+  }).catch((err: mongoose.Error) => {
     console.error("mogoose connect - error - ", err);
     throw err;
-  }
-);
-
-export default mongoose;
+  })
+const mongooseConnection :mongoose.Connection = mongoose.connection;
+export {mongooseConnection};
