@@ -40,4 +40,4 @@ appRouter.use("/box/search", createRoutesFolder(boxServiceAccountClient));
   }); //end forEach 
 
 
-export { appRouter };
+export default appRouter;

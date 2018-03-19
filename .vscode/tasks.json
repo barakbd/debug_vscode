@@ -4,7 +4,23 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "identifier": "tsc-watch",
+      "label": "tsc-watch-npm",
+      "type":"shell",
+      "command": "npm",
+      "args": ["run","watch"],
+      "problemMatcher": ["$tsc-watch"],
+      "isBackground": true,
+      "group": {
+        "kind":"build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "tsc-watch",
       "type": "typescript",
       "tsconfig": "tsconfig-dev.json",
       "problemMatcher": ["$tsc-watch"],
