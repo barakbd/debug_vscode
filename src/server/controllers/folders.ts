@@ -5,6 +5,7 @@ import {
   NextFunction,
   RequestHandler
 } from "express";
+import { Folder, FolderModel } from "../models/Folder";
 
 class FolderRoutes {
   static instance: FolderRoutes;

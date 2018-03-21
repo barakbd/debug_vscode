@@ -21,7 +21,11 @@ class FileRoutes {
   constructor(boxClient: any) {
     this._boxClientLocal = boxClient;
     this._router = Router();
-    this._router.post("/", upload.single("file"), this._create);
+    this._router.post(
+      "/:target_folder_id",
+      upload.single("file"),
+      this._create
+    );
     this._router.get("/:mongo_file_id", this._get);
   } //end constructor
 
@@ -39,11 +43,15 @@ class FileRoutes {
     res: Response,
     next: NextFunction
   ): Response => {
-    const file: Express.Multer.File = req.file;
+    // const file: Express.Multer.File = req.file;
     // const fileBuffer: Buffer = file.buffer; - informative
 
     return this._boxClientLocal.files
-      .uploadFile(req.body.target_folder_id, file.originalname, file.buffer)
+      .uploadFile(
+        req.params.target_folder_id,
+        req.file.originalname,
+        req.file.buffer
+      )
       .then((uploadFileSuccess: any) => {
         this._boxClientLocal.files
           .update(uploadFileSuccess.entries[0].id, {
@@ -52,7 +60,7 @@ class FileRoutes {
           .then((updatedFileCuccess: any) => {
             let newFile: InstanceType<File> = new FileModel();
             newFile.metadata = updatedFileCuccess;
-            newFile
+            return newFile
               .save()
               .then((newFileSaveSuccess: InstanceType<File> | Document) => {
                 res.status(200).json(newFileSaveSuccess);

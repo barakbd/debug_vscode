@@ -1,8 +1,9 @@
 {
     "verbose": true,
-    "ignore":["*.spec.ts"],
+    "ignore":["*.spec.ts", "*.js"],
     "execMap": {
         "js": "node -r dotenv/config --no-lazy --inspect-brk=9229"
     },
-    "watch": "./dist"
+    "watch": "./dist",
+    "ext": "js"
 }
