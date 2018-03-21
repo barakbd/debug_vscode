@@ -10,7 +10,7 @@
     "module": "commonjs",
     "outDir": "dist",
     "noImplicitAny": true,
-    // "noImplicitReturns": true,
+    "noImplicitReturns": true,
     // "noUnusedLocals": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

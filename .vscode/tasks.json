@@ -30,8 +30,8 @@
         "isDefault": true
       },
       "presentation": {
-        "reveal": "always",
-        "panel": "dedicated"
+        "reveal":"silent",
+        "panel":"new"
       }
     }
   ]
