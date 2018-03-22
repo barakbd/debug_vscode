@@ -7,9 +7,6 @@ import {
 } from "express";
 import * as mongoose from "mongoose";
 import { File, FileModel } from "../models/File";
-import * as multiparty from "multiparty";
-
-import util = require('util');
 
 //Needed for handling files
 import * as multer from "multer";
@@ -24,60 +21,20 @@ class FileRoutes {
   constructor(boxClient: any) {
     this._boxClientLocal = boxClient;
     this._router = Router();
-    // this._router.post(
-    //   "/:target_folder_id",
-    //   upload.single("file"),
-    //   this._create
-    // );
-    this._router.get("/:mongo_file_id", this._get);
+    //Routes
+    this._router.post(
+      "/:target_folder_id",
+      upload.single("file"),
+      this._create
+    );
+    // this._router.get("/:mongo_file_id", this._get);
+    
+    this._router.post(
+      "/pipe/:target_folder_id",
+      (req, res)=>{
 
-
-    this._router.post('/foo', function(req,res,next){
-         
-      let form = new multiparty.Form({
-        encoding: 'utf8',
-        maxFieldsSize: '18mb',
-        maxFields: 1, //one file?
-        maxFilesSize: '18mb'
-      } as any);
-      
-      // Note that if you are listening to 'part' events,
-      // the same error may be emitted from the `form` and the `part`.
-      form.once('error', function (err:any) {
-        console.error(err);
-      });
-
-      let data = '';
-      const onData = function(d:any){
-        data+=String(d);
-      };
-
-      const onEnd = function(){
-        console.log('emd emd end:', util.inspect(JSON.parse(data)));
       }
-      
-      form.on('part', function (part:any) {
-        
-        if (!part.filename) {
-          part.resume();
-        }
-        
-        if (part.filename) {
-          part.on('data', onData);
-          part.once('end', onEnd);
-        }
-        
-        part.once('error', function (err: any) {
-          console.error(err);
-          });
-      });
-      
-      form.once('close', function () { // Close emitted after form parsed
-        console.log('form is closed.')
-      });
-      
-      form.parse(req);  //form lib will parse the request stream for files
-    });
+    );
 
   } //end constructor
 
@@ -112,7 +69,7 @@ class FileRoutes {
           .then((updatedFileCuccess: any) => {
             let newFile: InstanceType<File> = new FileModel();
             newFile.metadata = updatedFileCuccess;
-            return newFile
+            newFile
               .save()
               .then((newFileSaveSuccess: InstanceType<File> | Document) => {
                 res.status(200).json(newFileSaveSuccess);
@@ -131,17 +88,17 @@ class FileRoutes {
       });
   }; //end _create
 
-  private _get: RequestHandler = (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<Response | void> => {
-    return FileModel.findById(req.params.mongo_file_id)
-      .then((fileDocument: InstanceType<File>) => {
-        return res.status(200).json(fileDocument);
-      })
-      .catch((err: any) => next(err));
-  }; //end _get
+  // private _get: RequestHandler = (
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
+  // ): Promise<Response | void> => {
+  //   return FileModel.findById(req.params.mongo_file_id)
+  //     .then((fileDocument: InstanceType<File>) => {
+  //       return res.status(200).json(fileDocument);
+  //     })
+  //     .catch((err: any) => next(err));
+  // }; //end _get
 } //end class FileMethods
 
 export default (boxClient: any): Router => {
