@@ -13,6 +13,7 @@ const createRoutes: Function = (boxClient: any): Router => {
   const collaborationMethods = new CollaborationMethods(boxClient);
   router.get("/:id", collaborationMethods.get);
   router.post("/", collaborationMethods.create);
+  router.post("/createEditor", collaborationMethods.createEditor);
   router.get("/:id/items", collaborationMethods.getItems);
   router.put("/", collaborationMethods.update);
   return router;
@@ -54,6 +55,31 @@ class CollaborationMethods {
     }
 
     return this._boxClientLocal.collaborations.createWithUserEmail(req.body.user_id, req.body.folder_id, this._boxClientLocal.collaborationRoles.VIEWER, { notify: false })
+      .then((collaborationInfo: any) => {
+        return res.json({
+          status: 400,
+          data: collaborationInfo
+        });
+      })
+      .catch((err: any) => {
+        return res.json(err);
+      });
+  }; //end create
+
+    public createEditor = (req: Request, res: Response): Response => {
+    if (!req.body || !req.body.folder_id || !req.body.user_id) {
+      return res.json({
+        status: 400,
+        message: "can't add empty folder_id or user_id"
+      });
+    } else if (typeof req.body.folder_id !== "string" || typeof req.body.user_id !== "string") {
+      return res.json({
+        status: 400,
+        message: "folder_id or user_id must be a string"
+      });
+    }
+
+    return this._boxClientLocal.collaborations.createWithUserEmail(req.body.user_id, req.body.folder_id, this._boxClientLocal.collaborationRoles.EDITOR, { notify: false })
       .then((collaborationInfo: any) => {
         return res.json({
           status: 400,
