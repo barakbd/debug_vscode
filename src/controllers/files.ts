@@ -27,15 +27,8 @@ class FileRoutes {
       upload.single("file"),
       this._create
     );
-    // this._router.get("/:mongo_file_id", this._get);
-    
-    this._router.post(
-      "/pipe/:target_folder_id",
-      (req, res)=>{
 
-      }
-    );
-
+    this._router.put("/refresh", this._refresh);
   } //end constructor
 
   //return singleton
@@ -93,12 +86,56 @@ class FileRoutes {
   //   res: Response,
   //   next: NextFunction
   // ): Promise<Response | void> => {
+  //   //Handle Expired Link
+
+  //   if (req.body.metadata.shared_link) this._boxClientLocal.files;
+  //   // Handle not expired link
+  //   // Handle file does not exists
+
   //   return FileModel.findById(req.params.mongo_file_id)
   //     .then((fileDocument: InstanceType<File>) => {
   //       return res.status(200).json(fileDocument);
   //     })
   //     .catch((err: any) => next(err));
   // }; //end _get
+
+  private _refresh: RequestHandler = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | void> => {
+    //Handle Expired Link
+    return this._boxClientLocal.files
+      .update(req.body.metadata.id, {
+        shared_link: this._boxClientLocal.accessLevels.DEFAULT
+      })
+      .then((updatedFileSuccessFromBox: any) => {
+        return FileModel.update(
+          { _id: req.body._id },
+          {
+            $set: { metadata: updatedFileSuccessFromBox }
+          }
+        )
+          .then(updatedFileSuccessFromMongo => {
+            return res.status(200).json({
+              mongo_file_id: req.body._id,
+              status: updatedFileSuccessFromMongo
+            });
+          })
+          .catch(updateFileErrorFromMongo => {
+            return res.status(400).json({
+              mongo_file_id: req.body._id,
+              status: updateFileErrorFromMongo
+            });
+          });
+      })
+      .catch((updateFileErrorFromBox: any) => {
+        return res.status(400).json({
+          mongo_file_id: req.body._id,
+          status: updateFileErrorFromBox
+        });
+      });
+  }; //end _put
 } //end class FileMethods
 
 export default (boxClient: any): Router => {

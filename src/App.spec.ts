@@ -8,7 +8,6 @@ import chaiHttp = require("chai-http");
 // import chaiHttp = require("chai-http");
 // import * as supertest from "supertest";
 import {app} from "./app";
-// import server from "./server"
 use(chaiHttp);
 describe("GET /folders/0", () => {
   it("it should get a folder named 'All Files' ", () => {

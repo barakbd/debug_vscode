@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import {appRouter} from "./server/config/routes";
+import {appRouter} from "./config/routes";
 
 const app: express.Application = express();
 app.use(bodyParser.json());

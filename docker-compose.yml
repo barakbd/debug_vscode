@@ -5,7 +5,7 @@ services:
     image: cdt-box
     command: npm run debug
     volumes: 
-          - ./dist:/server/dist
+          - ./dist:/dist
     build: .
     ports:
       - 4000:4000
