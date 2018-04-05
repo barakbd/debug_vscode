@@ -1,12 +1,15 @@
 version: '2.1'
 
 services:
-  cdt-box:
-    image: cdt-box
-    command: npm run debug
-    volumes: 
-          - ./dist:/dist
+  cdt_box:
+    # image: bbendavi/cdt_box:dev # if just want to run without build - will pull from registry
+    # env_file: #not needed as docker compose looks for .env by default
+    #   - .env
     build: .
+    volumes: 
+      - ./dist:/dist
+    image: cdt_box:${DOCKER_TAG}
     ports:
       - 4000:4000
       - 9222:9222
+    command: ["debug"]

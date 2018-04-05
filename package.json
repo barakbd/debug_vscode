@@ -1,5 +1,5 @@
 {
-  "name": "box_node_cdt",
+  "name": "cdt_box",
   "version": "1.0.0",
   "description": "microservice for interfacing with Box API",
   "main": "/dist/server.js",
@@ -7,10 +7,12 @@
     "postinstall": "tsc",
     "watch": "tsc -w -p ./src",
     "start": "node",
-    "debug-inline": "nodemon -r dotenv/config --no-lazy --inspect-brk=9229 --watch dist --ignore *.spec.ts",
+    "debug-inline":
+      "nodemon -r dotenv/config --no-lazy --inspect-brk=9229 --watch dist --ignore *.spec.ts",
     "debug": "nodemon",
     "docker-debug": "docker-compose up",
-    "test": "mocha -r ts-node/register -r dotenv/config -w --watch-extensions ts,tsx --recursive src/**/*.{ts,tsx}",
+    "test":
+      "mocha -r ts-node/register -r dotenv/config -w --watch-extensions ts,tsx --recursive src/**/*.{ts,tsx}",
     "test-unit": "NODE_ENV=test mocha --require co-mocha 'dist/*.spec.js'",
     "dev-test-watch": "mocha-typescript-watch"
   },
