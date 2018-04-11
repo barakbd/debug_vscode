@@ -22,6 +22,7 @@ class FolderRoutes {
 
   //return singleton
   static getRouter(boxClient: any): Router {
+    console.log("getRouter folders -  this.instance ", this.instance);
     this.instance === undefined
       ? (this.instance = new FolderRoutes(boxClient))
       : (this.instance = this.instance);

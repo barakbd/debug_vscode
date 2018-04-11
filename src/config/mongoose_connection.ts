@@ -2,16 +2,17 @@
 import * as mongoose from "mongoose";
 var connectionOptions: mongoose.ConnectionOptions | undefined;
 
-const uri: string = `mongodb://${process.env.MONGODB_DB_HOST}:${
-  process.env.MONGODB_DB_PORT
+const uri: string = `mongodb://${process.env.OPENSHIFT_MONGODB_DB_HOST}:${
+  process.env.OPENSHIFT_MONGODB_DB_PORT
 }/${process.env.MONGODB_DB_NAME}`;
 
+console.log("uri", uri);
 const mongooseConnectionOptions: mongoose.ConnectionOptions = {
   autoReconnect: true,
   reconnectTries: 3,
   keepAlive: 120,
-  user: process.env.MONGODB_DB_USERNAME,
-  pass: process.env.MONGODB_DB_PASSWORD,
+  user: process.env.OPENSHIFT_MONGODB_DB_USERNAME,
+  pass: process.env.OPENSHIFT_MONGODB_DB_PASSWORD,
   authSource: process.env.MONGODB_AUTH_SOURCE,
   replicaSet: process.env.MONGODB_REPLICASET
 };

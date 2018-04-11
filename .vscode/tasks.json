@@ -4,22 +4,6 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "tsc-watch-npm",
-      "type":"shell",
-      "command": "npm",
-      "args": ["run","watch"],
-      "problemMatcher": ["$tsc-watch"],
-      "isBackground": true,
-      "group": {
-        "kind":"build",
-        "isDefault": true
-      },
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated"
-      }
-    },
-    {
       "label": "tsc-watch",
       "type": "typescript",
       "tsconfig": "tsconfig-dev.json",
@@ -30,9 +14,29 @@
         "isDefault": true
       },
       "presentation": {
-        "reveal":"silent",
-        "panel":"new"
+        "reveal": "always",
+        "panel": "new"
       }
     }
+    /*
+    //Can also be defined with npm - add script "tsc-dev": "tsc -p ./tsconfig-dev.json"
+
+    {
+      "label": "tsc-watch-npm",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "tsc-dev"],
+      "problemMatcher": ["$tsc-watch"],
+      "isBackground": true,
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    }
+    */
   ]
 }

@@ -8,15 +8,13 @@
     "lib": ["es6", "dom"],
     "removeComments": true,
     "module": "commonjs",
-    "outDir": "dist",
+    "outDir": "./dist",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     // "noUnusedLocals": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": [
-    "./node_modules"
-  ],
+  "exclude": ["./node_modules"]
 }

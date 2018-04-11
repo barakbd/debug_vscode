@@ -7,119 +7,110 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "nodemon-npm",
-      "preLaunchTask": "tsc-watch", //Can comment out this line and run "npx tsc" in a seperate terminal to see transpile process
-      "cwd": "${workspaceFolder}",
+      "name": "Launch Docker via npm",
+      "preLaunchTask": "tsc-watch",
       "runtimeExecutable": "npm",
-      "program": "${workspaceFolder}/dist/server.js",
-      "runtimeArgs": ["run-script", "debug"],
-      "restart": true,
-      "sourceMaps": true,
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "console":"integratedTerminal",
-      "internalConsoleOptions":"neverOpen",
-      "runtimeVersion": "9.4.0", //for NVM
-      "protocol": "inspector",
-      // "envFile": "${workspaceFolder}/.env",
-      // "trace": false,
-      "port": 9229
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "nodemon-global",
-      "preLaunchTask": "tsc-watch", //Can comment out this line and run npx tsc in a seperate terminal to see transpile process
-      "runtimeExecutable": "nodemon",
-      "runtimeArgs": ["-r", "dotenv/config", "--no-lazy"],
-      "args": ["--watch", "dist", "--ignore", "*.spec.ts", "-L"],
-      "program": "${workspaceFolder}/dist/server.js",
-      "restart": true,
-      "sourceMaps": true,
+      "runtimeArgs": ["run", "docker-compose-debug"],
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/server",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "runtimeVersion": "9.4.0",
+      "runtimeVersion": "9.4.0", //for NVM
+      "protocol": "inspector",
+      "port": 9229,
+      "restart": true
+      // "timeout": 60000
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Docker: Attach to Node",
+      "preLaunchTask": "tsc-watch",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/server",
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      // "internalConsoleOptions": "neverOpen",
+      "restart": true,
+      "sourceMaps": true,
+      "address": "localhost",
+      "port": 9229,
       "protocol": "inspector"
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "Mocha Typescript - ts-node",
-      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "name": "nodemon-npm",
+      "preLaunchTask": "tsc-watch", //Can comment out this line and run "npx tsc" in a seperate terminal to see transpile process
+      // "preLaunchTask": "tsc-watch-npm", // same as tsc-watch, just using npm
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
+      "program": "${workspaceFolder}/dist/server.js",
+      // "args": ["node", "-r", "dotenv/config", "dotenv_config_path=../.env"],
+      "runtimeArgs": ["run-script", "debug"],
+      "restart": true,
       "sourceMaps": true,
-      "args": [
-        "-u",
-        "tdd",
-        "--timeout",
-        "999999",
-        "--colors",
-        // "${workspaceFolder}/test",
-        "-r",
-        "ts-node/register",
-        "-r",
-        "dotenv/config",
-        "-w",
-        "--watch-extensions",
-        "ts,tsx",
-        "--recursive",
-        "src/**/*.{ts,tsx}"
-      ],
-      "internalConsoleOptions": "openOnSessionStart",
-      "stopOnEntry": false,
-      "restart": false
-      // "runtimeArgs": ["-r", "ts-node/register", "-r", "dotenv/config"]
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Mocha Typescript",
-      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-      "preLaunchTask": "tsc",
-      "sourceMaps": true,
-      // "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "args": [
-        "-u",
-        "tdd",
-        "--timeout",
-        "999999",
-        "--colors",
-        "-r",
-        "dotenv/config",
-        // "-w",
-        // "--watch-extensions",
-        // "ts,tsx",
-        "--recursive",
-        "dist/**/*.js"
-      ],
-      "internalConsoleOptions": "openOnSessionStart",
-      "stopOnEntry": false
-      // "runtimeArgs": ["-r", "ts-node/register", "-r", "dotenv/config"]
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Mocha Typescript - current file",
-      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-      "sourceMaps": true,
-      "args": [
-        "-u",
-        "tdd",
-        "--timeout",
-        "999999",
-        "--colors",
-        // "${workspaceFolder}/test",
-        "-r",
-        "ts-node/register",
-        "-r",
-        "dotenv/config",
-        "-w",
-        "--watch-extensions",
-        "ts,tsx",
-        "${file}"
-      ],
-      "internalConsoleOptions": "openOnSessionStart",
-      "stopOnEntry": false
-      // "runtimeArgs": ["-r", "ts-node/register", "-r", "dotenv/config"]
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "runtimeVersion": "9.4.0", //for NVM
+      "protocol": "inspector",
+      // "envFile": "${workspaceFolder}/../cdt/.env",
+      // "timeout": 5000,
+      // "trace": false,
+      "port": 9229 // look in nodemon.json and docker-compose for port ref
     }
+    // {
+    //   "type": "node",
+    //   "request": "launch",
+    //   "name": "Mocha Typescript",
+    //   "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+    //   "preLaunchTask": "tsc",
+    //   "sourceMaps": true,
+    //   // "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+    //   "args": [
+    //     "-u",
+    //     "tdd",
+    //     "--timeout",
+    //     "999999",
+    //     "--colors",
+    //     "-r",
+    //     "dotenv/config",
+    //     // "-w",
+    //     // "--watch-extensions",
+    //     // "ts,tsx",
+    //     "--recursive",
+    //     "dist/**/*.js"
+    //   ],
+    //   "internalConsoleOptions": "openOnSessionStart",
+    //   "stopOnEntry": false
+    //   // "runtimeArgs": ["-r", "ts-node/register", "-r", "dotenv/config"]
+    // },
+    // {
+    //   "type": "node",
+    //   "request": "launch",
+    //   "name": "Mocha Typescript - current file",
+    //   "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+    //   "sourceMaps": true,
+    //   "args": [
+    //     "-u",
+    //     "tdd",
+    //     "--timeout",
+    //     "999999",
+    //     "--colors",
+    //     // "${workspaceFolder}/test",
+    //     "-r",
+    //     "ts-node/register",
+    //     "-r",
+    //     "dotenv/config",
+    //     "-w",
+    //     "--watch-extensions",
+    //     "ts,tsx",
+    //     "${file}"
+    //   ],
+    //   "internalConsoleOptions": "openOnSessionStart",
+    //   "stopOnEntry": false
+    //   // "runtimeArgs": ["-r", "ts-node/register", "-r", "dotenv/config"]
+    // }
   ]
 }

@@ -1,5 +1,5 @@
 // process.env.NODE_ENV = "TEST";
-
+console.log("app.spec.ts - sdfsfddsfsdf");
 import * as mocha from "mocha";
 // const chai = require("chai")
 // import * as chai from 'chai';
@@ -7,7 +7,7 @@ import { use, request, expect, assert, should } from "chai";
 import chaiHttp = require("chai-http");
 // import chaiHttp = require("chai-http");
 // import * as supertest from "supertest";
-import {app} from "./app";
+import { app } from "./app";
 use(chaiHttp);
 describe("GET /folders/0", () => {
   it("it should get a folder named 'All Files' ", () => {

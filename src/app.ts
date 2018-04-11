@@ -11,7 +11,7 @@ app.use(
 );
 app.get("/test", (req, res) => {
   res.json({
-    message: "Hello yuiohkh!"
+    message: "Hello jhgjhghjs!"
   });
 });
 app.use(appRouter);

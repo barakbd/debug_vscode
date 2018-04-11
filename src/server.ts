@@ -1,7 +1,7 @@
 //https://github.com/Microsoft/TypeScript-Node-Starter
 //keep app a seperate file - for Mocha testing
 import { app } from "./app";
-const port: any = process.env.PORT || 3000;
+const port: any = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 app.listen(port, (err: any) => {
   if (err) {

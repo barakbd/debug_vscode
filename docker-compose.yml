@@ -2,14 +2,25 @@ version: '2.1'
 
 services:
   cdt_box:
-    # image: bbendavi/cdt_box:dev # if just want to run without build - will pull from registry
-    # env_file: #not needed as docker compose looks for .env by default
-    #   - .env
-    build: .
+    container_name: cdt_box
+    restart: always
+    env_file: #not needed as docker compose looks for .env by default
+      - .env
+    build: . # if build arg not present, it will try to pull from registry
+    image: cdt_box:local
+    command: ["debug"]
     volumes: 
-      - ./dist:/dist
-    image: cdt_box:${DOCKER_TAG}
+      - ./dist:/server/dist
     ports:
       - 4000:4000
-      - 9222:9222
-    command: ["debug"]
+      - 9229:9229
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:3.6
+    container_name: mongo
+    volumes: 
+      - ./data/db:/data/db
+    ports: 
+      - 27018:27017
+
