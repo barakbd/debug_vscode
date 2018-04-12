@@ -53,7 +53,7 @@
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "runtimeVersion": "9.4.0", //for NVM
+      // "runtimeVersion": "9.4.0", //for NVM
       "protocol": "inspector",
       // "envFile": "${workspaceFolder}/../cdt/.env",
       // "timeout": 5000,

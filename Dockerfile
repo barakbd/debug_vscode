@@ -19,9 +19,8 @@ EXPOSE 4000
 USER node
 # Overwrite in runtime with --entrypoint "node" 
 # docker run -it --rm --init --entrypoint "node" imagename:tag "/dist/server.js"
-ENTRYPOINT ["npm", "run"]
-# default npm script
-CMD ["debug"]
+ENTRYPOINT ["node", "./dist/server.js"]
+
 
 
 # Stage 2 - TBD

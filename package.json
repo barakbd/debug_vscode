@@ -5,7 +5,7 @@
   "main": "./dist/server.js",
   "scripts": {
     "tsc": "tsc -p ./tsconfig.json",
-    "start": "node -r dotenv/config ./dist/server.js dotenv_config_path=../.env --no-lazy ",
+    "start": "node --no-lazy ./dist/server.js",
     "debug": "nodemon",
     "docker-compose-debug": "docker-compose up --force-recreate",
     "test": "mocha -r ts-node/register -r dotenv/config -w --watch-extensions ts,tsx --recursive src/**/*.{ts,tsx}",
