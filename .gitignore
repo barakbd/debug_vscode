@@ -64,3 +64,6 @@ box*config*.json
 dist/
 
 #scripts
+
+#created by mongo_docker
+data

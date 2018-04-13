@@ -4,11 +4,29 @@ services:
   cdt_box:
     container_name: cdt_box
     restart: always
-    env_file: #not needed as docker compose looks for .env by default
-      - .env
+    # env_file: #not needed as docker compose looks for .env by default
+    #   - .env
+    environment: 
+      NODE_ENV: ${NODE_ENV}
+      OPENSHIFT_NODEJS_IP: ${OPENSHIFT_NODEJS_IP}
+      CDT_BOX_NODEJS_PORT: ${CDT_BOX_NODEJS_PORT}
+      # OPENSHIFT_MONGODB_DB_HOST: ${OPENSHIFT_MONGODB_DB_HOST}
+      OPENSHIFT_MONGODB_DB_PORT: ${OPENSHIFT_MONGODB_DB_PORT}
+      OPENSHIFT_MONGODB_DB_HOST: mongodb
+      # OPENSHIFT_MONGODB_DB_PORT: 27018
+      MONGODB_DB_NAME: ${MONGODB_DB_NAME}
+      #BOX
+      BOX_CLIENT_ID: ${BOX_CLIENT_ID}
+      BOX_CLIENT_SECRET: ${BOX_CLIENT_SECRET}
+      BOX_PUBLIC_KEY_ID: ${BOX_PUBLIC_KEY_ID}
+      BOX_PASSPHRASE: ${BOX_PASSPHRASE}
+      BOX_APP_ENTERPRISE_ID: ${BOX_APP_ENTERPRISE_ID}
+      BOX_PRIVATE_KEY: ${BOX_PRIVATE_KEY}
+
     build: . # if build arg not present, it will try to pull from registry
-    image: cdt_box:local
-    command: ["debug"]
+    image: cdt_box:dev
+    # entrypoint: ["npm", "run", "debug"]
+    entrypoint: ["node", "./dist/server.js"]
     volumes: 
       - ./dist:/server/dist
     ports:
@@ -16,11 +34,13 @@ services:
       - 9229:9229
     depends_on:
       - mongodb
+    links:
+      - mongodb
   mongodb:
     image: mongo:3.6
     container_name: mongo
     volumes: 
       - ./data/db:/data/db
     ports: 
-      - 27018:27017
+      - 27018:${OPENSHIFT_MONGODB_DB_PORT}
 
