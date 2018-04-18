@@ -60,57 +60,5 @@
       // "trace": false,
       "port": 9229 // look in nodemon.json and docker-compose for port ref
     }
-    // {
-    //   "type": "node",
-    //   "request": "launch",
-    //   "name": "Mocha Typescript",
-    //   "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-    //   "preLaunchTask": "tsc",
-    //   "sourceMaps": true,
-    //   // "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-    //   "args": [
-    //     "-u",
-    //     "tdd",
-    //     "--timeout",
-    //     "999999",
-    //     "--colors",
-    //     "-r",
-    //     "dotenv/config",
-    //     // "-w",
-    //     // "--watch-extensions",
-    //     // "ts,tsx",
-    //     "--recursive",
-    //     "dist/**/*.js"
-    //   ],
-    //   "internalConsoleOptions": "openOnSessionStart",
-    //   "stopOnEntry": false
-    //   // "runtimeArgs": ["-r", "ts-node/register", "-r", "dotenv/config"]
-    // },
-    // {
-    //   "type": "node",
-    //   "request": "launch",
-    //   "name": "Mocha Typescript - current file",
-    //   "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-    //   "sourceMaps": true,
-    //   "args": [
-    //     "-u",
-    //     "tdd",
-    //     "--timeout",
-    //     "999999",
-    //     "--colors",
-    //     // "${workspaceFolder}/test",
-    //     "-r",
-    //     "ts-node/register",
-    //     "-r",
-    //     "dotenv/config",
-    //     "-w",
-    //     "--watch-extensions",
-    //     "ts,tsx",
-    //     "${file}"
-    //   ],
-    //   "internalConsoleOptions": "openOnSessionStart",
-    //   "stopOnEntry": false
-    //   // "runtimeArgs": ["-r", "ts-node/register", "-r", "dotenv/config"]
-    // }
   ]
 }
