@@ -2,9 +2,9 @@
 import * as mongoose from "mongoose";
 var connectionOptions: mongoose.ConnectionOptions | undefined;
 
-const uri: string = `mongodb://${process.env.OPENSHIFT_MONGODB_DB_HOST}:${
-  process.env.OPENSHIFT_MONGODB_DB_PORT
-}/${process.env.MONGODB_DB_NAME}`;
+const uri: string = `mongodb://${process.env.OPENSHIFT_MONGODB_DB_HOST}/${
+  process.env.MONGODB_DB_NAME
+}`;
 
 console.log("uri", uri);
 const mongooseConnectionOptions: mongoose.ConnectionOptions = {
