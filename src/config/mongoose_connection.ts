@@ -19,7 +19,7 @@ const mongooseConnectionOptions: mongoose.ConnectionOptions = {
 process.env.NODE_ENV === "local"
   ? (connectionOptions = undefined)
   : (connectionOptions = mongooseConnectionOptions);
-
+console.log("mongoose connectionOptions - ", connectionOptions);
 mongoose
   .connect(uri, connectionOptions)
   .then(() => {
