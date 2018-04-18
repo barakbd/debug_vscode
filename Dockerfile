@@ -14,7 +14,7 @@ COPY . ./
 RUN npm run tsc
 #EXPOSE - informational ony
 EXPOSE 4000
-LABEL git_commit=${GIT_COMMIT}
+LABEL git_commit=$GIT_COMMIT
 # run as non-root. USER node is provided with node images
 # https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md#non-root-user
 USER node
