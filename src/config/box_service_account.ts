@@ -41,7 +41,7 @@ boxServiceAccountClient.users
   .then((serviceAccountUser: any) => {
     // Log the Service Account's login value which should contain "AutomationUser".
     // For example, AutomationUser_375517_dxVhfxwzLL@boxdevedition.com
-    // console.log("Service Account - ", serviceAccountUser);
+    console.log("Service Account - ", serviceAccountUser);
   })
   .catch((err: any) => {
     // Log any errors for debugging

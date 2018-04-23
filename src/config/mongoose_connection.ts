@@ -16,10 +16,13 @@ const mongooseConnectionOptions: mongoose.ConnectionOptions = {
   authSource: process.env.MONGODB_AUTH_SOURCE,
   replicaSet: process.env.MONGODB_REPLICASET
 };
+
 process.env.NODE_ENV === "local"
   ? (connectionOptions = undefined)
   : (connectionOptions = mongooseConnectionOptions);
+
 console.log("mongoose connectionOptions - ", connectionOptions);
+
 mongoose
   .connect(uri, connectionOptions)
   .then(() => {

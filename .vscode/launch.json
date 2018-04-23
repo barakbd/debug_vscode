@@ -16,11 +16,11 @@
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "runtimeVersion": "9.4.0", //for NVM
+      // "runtimeVersion": "9.4.0", //for NVM
       "protocol": "inspector",
       "port": 9229,
+      "timeout": 60000,
       "restart": true
-      // "timeout": 60000
     },
     {
       "type": "node",
