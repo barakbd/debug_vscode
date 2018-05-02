@@ -21,7 +21,8 @@
       "port": 9225,
       "timeout": 60000,
       "sourceMaps": true,
-      "restart": true
+      "restart": true,
+      "trace": true
     },
     {
       "type": "node",
@@ -36,7 +37,8 @@
       "sourceMaps": true,
       "address": "localhost",
       "port": 9225,
-      "protocol": "inspector"
+      "protocol": "inspector",
+      "trace": true
     },
     {
       "type": "node",
