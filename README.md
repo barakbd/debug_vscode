@@ -12,8 +12,5 @@ run debugger in vscode (f5)
 ### TEST ENDPOINTS:
 http://localhost:6000/test/:string
 
-## Tests
-npm test (uses mocha, chai and chai-http)
-
 ## License
 MIT License<br />
