@@ -1,7 +1,6 @@
 ## Synopsis
 demo project for debugging typescript node server in Docker## Code Example
-```javascript
-```
+
 ## Motivation
 https://github.com/Microsoft/vscode-recipes/tree/master/Docker-TypeScript
 
