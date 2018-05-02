@@ -7,28 +7,19 @@ import {
 } from "express";
 import * as mongoose from "mongoose";
 import { File, FileModel } from "../models/File";
-
-//Needed for handling files
-import * as multer from "multer";
 import { InstanceType } from "typegoose";
-const upload: multer.Instance = multer({ storage: multer.memoryStorage() });
 
 class FileRoutes {
   static instance: FileRoutes;
   private _router: Router;
-  private _boxClientLocal: any;
+  private _prefix: string;
 
-  constructor(boxClient: any) {
-    this._boxClientLocal = boxClient;
+  constructor(prefix: string) {
+    this._prefix = prefix;
     this._router = Router();
     //Routes
-    this._router.post(
-      "/:target_folder_id",
-      upload.single("file"),
-      this._create
-    );
-
-    this._router.put("/refresh", this._refresh);
+    this._router.post("/", this._create);
+    this._router.get("/:id", this._get);
   } //end constructor
 
   //return singleton
@@ -40,104 +31,39 @@ class FileRoutes {
   }
 
   /******************* PRIVATE METHODS ****************/
+
   private _create: RequestHandler = (
     req: Request,
     res: Response,
     next: NextFunction
-  ): Response => {
-    // const file: Express.Multer.File = req.file;
-    // const fileBuffer: Buffer = file.buffer; - informative
+  ): Promise<Response> => {
+    let newFile: InstanceType<File> = new FileModel();
+    newFile.file_name = this._prefix + req.body.file_name;
 
-    return this._boxClientLocal.files
-      .uploadFile(
-        req.params.target_folder_id,
-        req.file.originalname,
-        req.file.buffer
-      )
-      .then((uploadFileSuccess: any) => {
-        this._boxClientLocal.files
-          .update(uploadFileSuccess.entries[0].id, {
-            shared_link: this._boxClientLocal.accessLevels.DEFAULT
-          })
-          .then((updatedFileCuccess: any) => {
-            let newFile: InstanceType<File> = new FileModel();
-            newFile.metadata = updatedFileCuccess;
-            newFile
-              .save()
-              .then((newFileSaveSuccess: InstanceType<File> | Document) => {
-                res.status(200).json(newFileSaveSuccess);
-              });
-          })
-          .catch((newFileSaveError: mongoose.Error) => {
-            // next(newFileSaveError);
-            return res.status(400).json(newFileSaveError);
-          })
-          .catch((updateFileError: any) => {
-            return res.status(updateFileError.statusCode).json(updateFileError);
-          });
+    return newFile
+      .save()
+      .then((newFileSaveSuccess: InstanceType<File> | Document) => {
+        return res.status(200).json(newFileSaveSuccess);
       })
-      .catch((uploadError: any) => {
-        return res.status(uploadError.statusCode).json(uploadError);
+      .catch((newFileSaveError: mongoose.Error) => {
+        // next(newFileSaveError);
+        return res.status(400).json(newFileSaveError);
       });
   }; //end _create
 
-  // private _get: RequestHandler = (
-  //   req: Request,
-  //   res: Response,
-  //   next: NextFunction
-  // ): Promise<Response | void> => {
-  //   //Handle Expired Link
-
-  //   if (req.body.metadata.shared_link) this._boxClientLocal.files;
-  //   // Handle not expired link
-  //   // Handle file does not exists
-
-  //   return FileModel.findById(req.params.mongo_file_id)
-  //     .then((fileDocument: InstanceType<File>) => {
-  //       return res.status(200).json(fileDocument);
-  //     })
-  //     .catch((err: any) => next(err));
-  // }; //end _get
-
-  private _refresh: RequestHandler = (
+  private _get: RequestHandler = (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response | void> => {
-    //Handle Expired Link
-    return this._boxClientLocal.files
-      .update(req.body.metadata.id, {
-        shared_link: this._boxClientLocal.accessLevels.DEFAULT
+    return FileModel.findById(req.params.id)
+      .then(file => {
+        return res.status(200).json(file);
       })
-      .then((updatedFileSuccessFromBox: any) => {
-        return FileModel.update(
-          { _id: req.body._id },
-          {
-            $set: { metadata: updatedFileSuccessFromBox }
-          }
-        )
-          .then(updatedFileSuccessFromMongo => {
-            return res.status(200).json({
-              mongo_file_id: req.body._id,
-              status: updatedFileSuccessFromMongo
-            });
-          })
-          .catch(updateFileErrorFromMongo => {
-            return res.status(400).json({
-              mongo_file_id: req.body._id,
-              status: updateFileErrorFromMongo
-            });
-          });
-      })
-      .catch((updateFileErrorFromBox: any) => {
-        return res.status(400).json({
-          mongo_file_id: req.body._id,
-          status: updateFileErrorFromBox
-        });
-      });
-  }; //end _put
+      .catch(next);
+  }; //end _get
 } //end class FileMethods
 
-export default (boxClient: any): Router => {
-  return FileRoutes.getRouter(boxClient);
+export default (prefix: string): Router => {
+  return FileRoutes.getRouter(prefix);
 };

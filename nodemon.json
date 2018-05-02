@@ -1,8 +1,8 @@
 {
     "verbose": true,
-    "ignore": ["*.spec.ts", "*.js"],
+    "ignore": ["*.spec.ts"],
     "execMap": {
-        "js": "node --no-lazy  --inspect-brk=9229"
+        "js": "node --no-lazy  --inspect=9225"
     },
     "watch": "./dist",
     "ext": "js"

@@ -5,24 +5,25 @@ import {
   NextFunction,
   RequestHandler
 } from "express";
+import * as mongoose from "mongoose";
 import { Folder, FolderModel } from "../models/Folder";
+import { InstanceType } from "typegoose";
 
 class FolderRoutes {
   static instance: FolderRoutes;
   private _router: Router;
-  private _boxClientLocal: any;
+  private _prefix: string;
 
-  constructor(boxClient: any) {
-    this._boxClientLocal = boxClient;
+  constructor(prefix: string) {
+    this._prefix = prefix;
     this._router = Router();
+    //Routes
     this._router.post("/", this._create);
-    this._router.get("/:id", this._get);
-    this._router.get("/:id/items", this._getItems);
+    this._router.get("/:folder_name", this._get);
   } //end constructor
 
   //return singleton
   static getRouter(boxClient: any): Router {
-    console.log("getRouter folders -  this.instance ", this.instance);
     this.instance === undefined
       ? (this.instance = new FolderRoutes(boxClient))
       : (this.instance = this.instance);
@@ -30,56 +31,44 @@ class FolderRoutes {
   }
 
   /******************* PRIVATE METHODS ****************/
+
   private _create: RequestHandler = (
     req: Request,
     res: Response,
     next: NextFunction
-  ): Response => {
-    return this._boxClientLocal.folders
-      .create(req.body.ancestor_folder_id, req.body.new_folder_name)
-      .then((folderInfo: any) => {
-        return res.status(200).json(folderInfo);
+  ): Promise<Response> => {
+    let newFolder: InstanceType<Folder> = new FolderModel();
+    newFolder.folder_name = this._prefix + req.body.folder_name;
+
+    return newFolder
+      .save()
+      .then((newFolderSaveSuccess: InstanceType<Folder> | Document) => {
+        return res.status(200).json(newFolderSaveSuccess);
       })
-      .catch((err: any) => {
-        return res.status(err.statusCode).json(err);
+      .catch((newFolderSaveError: mongoose.Error) => {
+        // next(newFolderSaveError);
+        return res.status(400).json(newFolderSaveError);
       });
-  }; //end create
+  }; //end _create
 
   private _get: RequestHandler = (
     req: Request,
     res: Response,
     next: NextFunction
-  ): Response => {
-    return this._boxClientLocal.folders
-      .get(/* "45416054928" */ req.params.id, {
-        fields: "name,shared_link,permissions,collections,sync_state"
+  ): Promise<Response> => {
+    return FolderModel.find({
+      folder_name: this._prefix + req.params.folder_name
+    })
+      .then(folder => {
+        return res.status(200).json(folder);
       })
-      .then((folderInfo: any) => {
-        return res.status(200).json(folderInfo);
-      })
-      .catch((err: any) => {
-        return res.status(err.statusCode).json(err);
+      .catch(err => {
+        // next(newFolderSaveError);
+        return res.status(400).json(err);
       });
-  }; //end get
-
-  private _getItems: RequestHandler = (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Response => {
-    return this._boxClientLocal.folders
-      .getItems(/* "45416054928" */ req.params.id, {
-        fields: "name,shared_link,permissions,collections,sync_state"
-      })
-      .then((folderInfo: any) => {
-        return res.status(200).json(folderInfo);
-      })
-      .catch((err: any) => {
-        return res.status(err.statusCode).json(err);
-      });
-  }; //end getItems
+  }; //end _get
 } //end class FolderMethods
 
-export default (boxClient: any): Router => {
-  return FolderRoutes.getRouter(boxClient);
+export default (prefix: string): Router => {
+  return FolderRoutes.getRouter(prefix);
 };

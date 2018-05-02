@@ -5,11 +5,7 @@ import { prop, Typegoose, ModelType, InstanceType } from "typegoose";
 
 export class File extends Typegoose {
   @prop({ required: true })
-  metadata: any;
-  // constructor(metadata: any) {
-  //   super();
-  //   this.metadata = metadata;
-  // }
+  file_name: string;
 } //end class File
 
 const FileModel: ModelType<File> = new File().getModelForClass(File, {

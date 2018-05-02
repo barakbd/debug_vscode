@@ -6,17 +6,19 @@
 
 ########## DOCKER BUILD AND PUSH ###############
 
-docker login containers.cisco.com
--generate encrypted password
+docker login
 
 # build
-docker build --no-cache -t cdt_box:dev . 
-# run cdt_box
-docker run -it --rm -p 4000:4000 cdt_box:dev start 
+docker build --no-cache -t docker-ts-debug:dev . 
+# run docker-ts-debug
+docker run --rm -it --env-file .env -p 6000:6000 docker-ts-debug:dev
+# build and run
+docker build -t docker-ts-debug:dev . && docker run --rm -it --env-file .env -p 6000:6000 docker-ts-debug:dev
+
 # run mongo
-docker run --rm -it -v /data:/data -p 27018:27017 mongo:3.6
+docker run --rm -it --env-file .env -v /data:/data -p 27018:27017 mongo:3.6
 docker-compose up
-docker-compose down - will rm containers 
+docker-compose down #will rm containers 
 
 ########## DOCKER CLEANUP ###############
 #  https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes
@@ -40,8 +42,8 @@ docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
 
 docker container stop 1fa4ab2cf395
 
-docker tag cdt_box bbendavi/cdt_box:dev
-docker push bbendavi/cdt_box:dev
+docker tag docker-ts-debug username/docker-ts-debug:dev
+docker push username/docker-ts-debug:dev
 
 # list containers
 docker ps -a

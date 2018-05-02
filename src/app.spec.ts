@@ -9,28 +9,23 @@ import chaiHttp = require("chai-http");
 // import * as supertest from "supertest";
 import { app } from "./app";
 use(chaiHttp);
-describe("GET /folders/0", () => {
+describe("GET /test", () => {
   it("it should get a folder named 'All Files' ", () => {
-    //
+    const string: string = "my_name";
     request(app)
-      .get("/folders/1")
+      .get(`/test/${string}`)
       //   .expect(200)
       .end((err, res) => {
-        console.log("appppppp - ", app);
+        console.log("app - ", app);
         try {
           expect(200);
           expect(res.body).to.not.equal(null);
-          //   expect(res).to.have.status(200);
+          expect(res.body).to.be(`{message: Hello from ${string}!}`);
+
           //   done();
-        } catch (e) {
+        } catch (err) {
           //   done(e);
         }
-
-        // expect(res).to.be
-        // res.should.have.status(200);
-
-        // res.body.should.be.a('object');
-        // res.body.data.name.should.be.equal('object');
       });
   });
 });

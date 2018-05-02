@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Docker via npm",
+      "name": "npm-docker-compose",
       "preLaunchTask": "tsc-watch",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "docker-compose-debug"],
@@ -18,8 +18,9 @@
       "internalConsoleOptions": "neverOpen",
       // "runtimeVersion": "9.4.0", //for NVM
       "protocol": "inspector",
-      "port": 9229,
+      "port": 9225,
       "timeout": 60000,
+      "sourceMaps": true,
       "restart": true
     },
     {
@@ -30,17 +31,17 @@
       "localRoot": "${workspaceFolder}",
       "remoteRoot": "/server",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      // "internalConsoleOptions": "neverOpen",
-      "restart": true,
+      // "internalConsoleOptions": "openOnFirstSessionStart",
+      // "restart": true,
       "sourceMaps": true,
       "address": "localhost",
-      "port": 9229,
+      "port": 9225,
       "protocol": "inspector"
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "nodemon-npm",
+      "name": "npm-nodemon",
       "preLaunchTask": "tsc-watch", //Can comment out this line and run "npx tsc" in a seperate terminal to see transpile process
       // "preLaunchTask": "tsc-watch-npm", // same as tsc-watch, just using npm
       "cwd": "${workspaceFolder}",
@@ -55,10 +56,10 @@
       "internalConsoleOptions": "neverOpen",
       // "runtimeVersion": "9.4.0", //for NVM
       "protocol": "inspector",
-      // "envFile": "${workspaceFolder}/../cdt/.env",
+      "envFile": "${workspaceFolder}/.env",
       // "timeout": 5000,
       // "trace": false,
-      "port": 9229 // look in nodemon.json and docker-compose for port ref
+      "port": 9225 // look in nodemon.json and docker-compose for port ref
     }
   ]
 }

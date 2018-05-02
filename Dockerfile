@@ -13,7 +13,7 @@ RUN npm i
 COPY . ./
 RUN npm run tsc
 #EXPOSE - informational ony
-EXPOSE 4000
+EXPOSE 6000
 ARG GIT_COMMIT
 LABEL git_commit=$GIT_COMMIT
 # run as non-root. USER node is provided with node images

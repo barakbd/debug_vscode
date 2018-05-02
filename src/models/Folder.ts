@@ -4,15 +4,11 @@ import { mongooseConnection } from "../config/mongoose_connection";
 import { prop, Typegoose, ModelType, InstanceType } from "typegoose";
 
 export class Folder extends Typegoose {
-  @prop({ required: true })
-  metadata: any;
-  // constructor(metadata: any) {
-  //   super();
-  //   this.metadata = metadata;
-  // }
-} //end class File
+  @prop({ required: true, unique: true })
+  folder_name: string;
+} //end class Folder
 
-const FolderModel: ModelType<Folder> = new Folder().getModelForClass(File, {
+const FolderModel: ModelType<Folder> = new Folder().getModelForClass(Folder, {
   existingConnection: mongooseConnection
 });
 

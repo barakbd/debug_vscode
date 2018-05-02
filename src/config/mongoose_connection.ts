@@ -2,8 +2,8 @@
 import * as mongoose from "mongoose";
 var connectionOptions: mongoose.ConnectionOptions | undefined;
 
-const uri: string = `mongodb://${process.env.OPENSHIFT_MONGODB_DB_HOST}/${
-  process.env.MONGODB_DB_NAME
+const uri: string = `mongodb://${process.env.MONGODB_HOST_AND_PORT_LIST}/${
+  process.env.MONGODB_DATABASE_NAME
 }`;
 
 console.log("uri", uri);
@@ -11,8 +11,8 @@ const mongooseConnectionOptions: mongoose.ConnectionOptions = {
   autoReconnect: true,
   reconnectTries: 3,
   keepAlive: 120,
-  user: process.env.OPENSHIFT_MONGODB_DB_USERNAME,
-  pass: process.env.OPENSHIFT_MONGODB_DB_PASSWORD,
+  user: process.env.MONGODB_DB_USERNAME,
+  pass: process.env.MONGODB_DB_PASSWORD,
   authSource: process.env.MONGODB_AUTH_SOURCE,
   replicaSet: process.env.MONGODB_REPLICASET
 };
@@ -32,7 +32,8 @@ mongoose
   })
   .catch((err: mongoose.Error) => {
     console.error("mogoose connect - error - ", err);
-    throw err;
+    // throw err;
+    process.kill(process.pid);
   });
 const mongooseConnection: mongoose.Connection = mongoose.connection;
 export { mongooseConnection };
