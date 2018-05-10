@@ -4,6 +4,10 @@
 # Stage 1
 
 FROM node:9.10-alpine
+# alpine uses apk
+RUN apk update && apk upgrade
+RUN apk add --update --no-cache netcat-openbsd bash
+
 # ENV WORKDIR AND COPY run with USER root
 # If you want the server files and node_modules files to be owned by USER node:
 # you need to chown to USER node after every COPY.
@@ -14,6 +18,8 @@ COPY . ./
 RUN npm run tsc
 #EXPOSE - informational ony
 EXPOSE 6000
+EXPOSE 9225
+
 ARG GIT_COMMIT
 LABEL git_commit=$GIT_COMMIT
 # run as non-root. USER node is provided with node images

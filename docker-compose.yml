@@ -6,21 +6,21 @@ services:
     restart: always
     env_file: 
       - .env
-    # environment: 
-    #   NODE_ENV: ${NODE_ENV}
-    #   NODE_SERVER_PORT: ${NODE_SERVER_PORT}
-    #   #MONGO
-    #   MONGODB_DB_HOST_PORT_LIST: mongodb:27017
-    #   MONGODB_DB_NAME: ${MONGODB_DB_NAME}
+    environment: # Another way to define env vars
+      NODE_ENV: docker
+      MONGODB_HOST_AND_PORT_LIST: mongodb:27017
 
-    build: . # if build arg not present, it will try to pull from registry
+    build: # if build arg not present, it will try to pull from registry
+      context: . 
+      # args: 
+      #   - GIT_COMMIT: "git log -1 --pretty=format:%H"
     image: docker-ts-debug:dev
     entrypoint: ["npm", "run", "debug"]
     volumes: 
       - ./dist:/server/dist
     ports:
       - ${DOCKER_TS_DEBUG_NODE_PORT}:${DOCKER_TS_DEBUG_NODE_PORT}
-      - 9225:9225
+      - ${DEBUG_PORT}:${DEBUG_PORT}
     depends_on:
       - mongodb
   mongodb:

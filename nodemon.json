@@ -2,7 +2,7 @@
     "verbose": true,
     "ignore": ["*.spec.ts"],
     "execMap": {
-        "js": "node --no-lazy  --inspect=9225"
+        "js": "node --no-lazy  --inspect=$DEBUG_PORT"
     },
     "watch": "./dist",
     "ext": "js"

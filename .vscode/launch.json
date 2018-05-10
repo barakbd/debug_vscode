@@ -61,6 +61,7 @@
       "envFile": "${workspaceFolder}/.env",
       // "timeout": 5000,
       // "trace": false,
+
       "port": 9225 // look in nodemon.json and docker-compose for port ref
     }
   ]
