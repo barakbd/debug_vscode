@@ -18,7 +18,6 @@ COPY . ./
 RUN npm run tsc
 #EXPOSE - informational ony
 EXPOSE 6000
-EXPOSE 9225
 
 ARG GIT_COMMIT
 LABEL git_commit=$GIT_COMMIT
@@ -27,8 +26,8 @@ LABEL git_commit=$GIT_COMMIT
 USER node
 # Overwrite in runtime with --entrypoint "node" 
 # docker run -it --rm --init --entrypoint "node" imagename:tag "/dist/server.js"
-# ENTRYPOINT ["node", "./dist/server.js"]
-ENTRYPOINT ["npm", "run", "debug"]
+ENTRYPOINT ["node", "./dist/server.js"]
+# ENTRYPOINT ["npm", "run", "debug"]
 
 
 
