@@ -16,7 +16,7 @@
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      // "runtimeVersion": "9.4.0", //for NVM
+      "runtimeVersion": "9.4.0", //for NVM
       "protocol": "inspector",
       "port": 9225,
       "timeout": 60000,
@@ -37,7 +37,7 @@
       "sourceMaps": true,
       "address": "localhost",
       "port": 9225,
-      "protocol": "inspector",
+      // "protocol": "inspector",
       "trace": true
     },
     {

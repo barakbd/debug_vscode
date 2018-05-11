@@ -7,8 +7,11 @@ services:
     env_file: 
       - .env
     environment: # Another way to define env vars
-      NODE_ENV: docker
-      MONGODB_HOST_AND_PORT_LIST: mongodb:27017
+      # NODE_ENV: docker
+      #connect to dockerize mongo
+      MONGODB_HOST_AND_PORT_LIST: mongodb:27017 
+      # connect to local mongo on Mac
+      # MONGODB_HOST_AND_PORT_LIST: docker.for.mac.localhost:27017 
 
     build: # if build arg not present, it will try to pull from registry
       context: . 
