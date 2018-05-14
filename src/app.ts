@@ -11,7 +11,7 @@ app.use(
   })
 );
 app.get("/test/:string", (req, res) => {
-  console.log("test route is working");
+  console.log("test route is asdasd");
   res.json({
     message: `Hello from ${req.params.string}!`
   });
